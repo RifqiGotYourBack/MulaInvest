@@ -35,5 +35,28 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 // Investment (belum bikin routes)
 // Page Home (User)
 
-// Page CMS
-Route::get('/content-management-system', [AdminController::class, 'showCMS'])->name('content-management-system');
+Route::group([
+    'middleware' => 'auth',
+], function () {
+
+    Route::group([
+        'middleware' => 'admin',
+    ], function () {
+        // Page CMS
+        Route::get('/content-management-system', [AdminController::class, 'showCMS'])->name('content-management-system');
+    });
+
+    // Page Home
+    
+    // Page Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile-page');
+    // Page Edit Profile
+    Route::get('/edit-profile', [ProfileController::class, 'showEditProfileForm'])->name('edit-profile-form');
+    // Controller Edit Profile
+    Route::post('/edit-profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
+
+    // Page Edit Password
+    Route::get('/edit-password', [ProfileController::class, 'showEditPasswordForm'])->name('edit-password-form');
+    // Controller Edit Password
+    Route::post('/edit-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+});
