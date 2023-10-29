@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\InvestmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +45,18 @@ Route::group([
     ], function () {
         // Page CMS
         Route::get('/content-management-system', [AdminController::class, 'showCMS'])->name('content-management-system');
+
+        Route::get('/investments', [InvestmentController::class, 'index'])->name('investments.index');
+        Route::get('/investments/create', [InvestmentController::class, 'create'])->name('investments.create');
+        Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
+        Route::get('/investments/{investment}', [InvestmentController::class, 'show'])->name('investments.show');
+        Route::get('/investments/{investment}/edit', [InvestmentController::class, 'edit'])->name('investments.edit');
+        Route::put('/investments/{investment}', [InvestmentController::class, 'update'])->name('investments.update');
+        Route::delete('/investments/{investment}', [InvestmentController::class, 'destroy'])->name('investments.destroy');
     });
 
     // Page Home
-    
+
     // Page Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile-page');
     // Page Edit Profile
@@ -59,4 +68,10 @@ Route::group([
     Route::get('/edit-password', [ProfileController::class, 'showEditPasswordForm'])->name('edit-password-form');
     // Controller Edit Password
     Route::post('/edit-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+
+    // Page Edit Account Bank
+    Route::get('/edit-bank-account', [ProfileController::class, 'showEditBankAccount'])->name('edit-bank-account-form');
+
+    // Controller Edit Account Bank
+    Route::post('/update-bank-account', [ProfileController::class, 'updateBankAccount'])->name('update-bank-account');
 });

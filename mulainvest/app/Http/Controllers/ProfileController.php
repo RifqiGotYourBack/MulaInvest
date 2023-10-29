@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Users;
+use App\Models\BankAccounts;
 
 class ProfileController extends Controller
 {
-    
+
     public function index()
     {
-        $user = User::where('UserID', auth()->user()->UserID)->first();
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
         return view('profile', [
             'title' => 'Profil',
             'user' => $user
@@ -21,8 +22,10 @@ class ProfileController extends Controller
 
     public function showEditProfileForm()
     {
-        $user = User::where('UserID', auth()->user()->UserID)->first();
-        return view('edit-profile-form');
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
+        return view('edit-profile-form', [
+            'user' => $user
+        ]);
     }
 
     public function updateProfile(Request $request)
@@ -35,7 +38,7 @@ class ProfileController extends Controller
         ]);
 
         // Dapatkan user yang sedang login
-        $user = User::where('UserID', auth()->user()->UserID)->first();
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
 
         // Update data user
         $user->Name = $request->full_name;
@@ -53,7 +56,7 @@ class ProfileController extends Controller
 
     public function showEditPasswordForm()
     {
-        $user = User::where('UserID', auth()->user()->UserID)->first();
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
         return view('edit-password-form');
     }
 
@@ -66,7 +69,7 @@ class ProfileController extends Controller
         ]);
 
         // Dapatkan user yang sedang login
-        $user = User::where('UserID', auth()->user()->UserID)->first();
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
 
         // Periksa apakah kata sandi lama sesuai
         if (!Hash::check($request->old_password, $user->password)) {
@@ -82,6 +85,52 @@ class ProfileController extends Controller
         } else {
             // Redirect dengan pesan kesalahan
             return back()->with('error', 'Failed to update password. Please try again.');
+        }
+    }
+
+    public function showEditBankAccount()
+    {
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
+        $bankAccount = BankAccounts::where('UserID', $user->UserID)->first();
+
+        return view('edit-bank-account-form', [
+            'user' => $user,
+            'bankAccount' => $bankAccount
+        ]);
+    }
+
+    public function updateBankAccount(Request $request)
+    {
+        // Validasi form inputan
+        $request->validate([
+            'bank_name' => 'required|string|max:255',
+            'bank_account_number' => 'required|string|max:255',
+            'address' => 'nullable|string',
+        ]);
+
+        // Dapatkan user yang sedang login
+        $user = Users::where('UserID', auth()->user()->UserID)->first();
+
+        // Periksa apakah pengguna memiliki informasi rekening bank
+        $bankAccount = BankAccounts::where('UserID', $user->UserID)->first();
+
+        // Jika pengguna belum memiliki informasi rekening bank, buat entri baru
+        if (!$bankAccount) {
+            $bankAccount = new BankAccounts;
+            $bankAccount->UserID = $user->UserID;
+        }
+
+        // Update informasi rekening bank
+        $bankAccount->BankName = $request->bank_name;
+        $bankAccount->BankAccountNumber = $request->bank_account_number;
+        $bankAccount->Address = $request->address;
+
+        if ($bankAccount->save()) {
+            // Redirect dengan pesan sukses
+            return redirect()->route('profile-page')->with('status', 'Bank Account Updated!');
+        } else {
+            // Redirect dengan pesan kesalahan
+            return back()->with('error', 'Failed to update bank account information. Please try again.');
         }
     }
 }
