@@ -6,26 +6,20 @@ use App\Models\Investments;
 
 class InvestmentController extends Controller
 {
-    /**
-     * Display a listing of the investments.
-     */
+   // Get all investments
     public function index()
     {
         $investments = Investments::all();
         return view('investments.index', compact('investments'));
     }
 
-    /**
-     * Show the form for creating a new investment.
-     */
+    // Show add investment form
     public function create()
     {
         return view('investments.create');
     }
 
-    /**
-     * Store a newly created investment in storage.
-     */
+    // Store added investment
     public function store(Request $request)
     {
         $request->validate([
@@ -51,17 +45,13 @@ class InvestmentController extends Controller
         return view('investments.show', compact('investment'));
     }
 
-    /**
-     * Show the form for editing the specified investment.
-     */
+    // Show edit investment form
     public function edit(Investments $investment)
     {
         return view('investments.edit', compact('investment'));
     }
 
-    /**
-     * Update the specified investment in storage.
-     */
+    // Update an investment
     public function update(Request $request, Investments $investment)
     {
         $request->validate([
@@ -79,9 +69,7 @@ class InvestmentController extends Controller
                          ->with('success', 'Investment updated successfully.');
     }
 
-    /**
-     * Remove the specified investment from storage.
-     */
+    // Delete an Investment
     public function destroy(Investments $investment)
     {
         $investment->delete();
