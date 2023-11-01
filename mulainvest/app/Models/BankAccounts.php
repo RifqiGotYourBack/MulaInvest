@@ -12,6 +12,6 @@ class BankAccounts extends Model
     protected $primaryKey = 'BankAccountID';
 
     protected $fillable = [
-        'UserID', 'BankName', 'BankAccountNumber', 'Address'
+        'UserID', 'BankName', 'BankAccountNumber'
     ];
 }

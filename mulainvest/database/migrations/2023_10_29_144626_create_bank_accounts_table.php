@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('UserID')->references('UserID')->on('users')->onDelete('cascade');
             $table->string('BankName');
             $table->string('BankAccountNumber');
-            $table->string('Address');
             $table->timestamps();
         });
     }

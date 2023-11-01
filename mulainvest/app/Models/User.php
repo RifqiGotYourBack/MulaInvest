@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Users extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
-    
+    use HasApiTokens, HasFactory, Notifiable;
+    protected $table = 'users';
+
     protected $primaryKey = 'UserID';
 
     protected $fillable = [
-        'Name', 'Email', 'Password', 'NoTelepon', 'Balance', 'Role', 'IsActive'
+        'Name', 'Email', 'Password', 'NoTelepon', 'Address', 'Balance', 'Role', 'IsActive'
     ];
 
     // A user has many assets

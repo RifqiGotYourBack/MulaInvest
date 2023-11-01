@@ -1,5 +1,5 @@
 <body>
-  
+
 <nav class="navbar navbar-expand-lg px-5" style="background-color: #0198a3">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ route('beranda') }}">
@@ -58,7 +58,7 @@
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <a class="dropdown-item" href="{{ route('berandaTamu') }}">
+              <a class="dropdown-item" href="{{ route('logout') }}">
                 <img class="me-2" src="images/keluar.png" alt="keluar" width="23px" />
                 Keluar</a
               >

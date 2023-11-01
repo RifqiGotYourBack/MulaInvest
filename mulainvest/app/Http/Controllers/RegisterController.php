@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Users;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -23,18 +25,27 @@ class RegisterController extends Controller
         ]);
 
         // Create User
-        $user = new Users;
+        $user = new User;
         $user->UserID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
         $user->Name = $request->full_name;
         $user->Email = $request->email;
         $user->Password = Hash::make($request->password);
         $user->Balance = 0;
+        $user->NoTelp = '';
+        $user->Address = '';
         $user->Role = 'user';
         $user->IsActive = 1;
 
+        $bankAccount = new BankAccounts;
+        $bankAccount->BankAccountID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+        $bankAccount->UserID = $user->UserID;
+        $bankAccount->BankName = '';
+        $bankAccount->BankAccountNumber = '';
+
         if ($user->save()) {
+            $bankAccount->save();
             //Nanti ganti route-nya dengan Login page
-            return redirect()->route('register-success')->with('status', 'Registration successful!');
+            return redirect()->route('register')->with('status', 'Registration successful!');
         } else {
             return back()->with('error', 'Failed to register. Please try again.');
         }
