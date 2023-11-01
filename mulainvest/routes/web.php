@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\InvestmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,62 +13,107 @@ use App\Http\Controllers\InvestmentController;
 |
 */
 
+// autentikasi
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/loginAdmin', function () {
+    return view('loginAdmin');
+})->name('loginAdmin');
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+Route::get('/registerAdmin', function () {
+    return view('registerAdmin');
+})->name('registerAdmin');
+
+
+
+
+// bagian utama
 Route::get('/', function () {
-    return view('welcome');
+    return view('beranda');
+})->name('beranda');
+
+Route::get('/beranda', function () {
+    return view('beranda');
+})->name('beranda');
+
+Route::get('/berandaTamu', function () {
+    return view('berandaTamu');
+})->name('berandaTamu');
+
+Route::get('/tentang', function () {
+    return view('tentang');
+})->name('tentang');
+
+Route::get('/investasi', function () {
+    return view('investasi');
+})->name('investasi');
+
+Route::get('/aset', function () {
+    return view('aset');
+})->name('aset');
+
+// profil
+Route::get('/profil', function () {
+    return view('profil');
+})->name('profil');
+
+Route::get('/bankAkun', function () {
+    return view('bankAkun');
+})->name('bankAkun');
+
+Route::get('/topUp', function () {
+    return view('topUp');
+})->name('topUp');
+
+Route::get('/gantiPassword', function () {
+    return view('gantiPassword');
+})->name('gantiPassword');
+
+Route::get('/bantuan', function () {
+    return view('bantuan');
+})->name('bantuan');
+
+
+// admin
+Route::get('/admin', function () {
+    return view('admin');
+})->name('admin');
+
+Route::get('/pasarUang', function () {
+    return view('pasarUang');
+})->name('pasarUang');
+
+Route::get('/obligasi', function () {
+    return view('obligasi');
+})->name('obligasi');
+
+
+
+Route::get('/coba', function () {
+    return view('coba');
+})->name('coba');
+
+
+Route::get('/index', function () {
+    return view('index');
 });
 
-// Page Registrasi
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register-form');
-// Controller Registrasi
-Route::post('/register', [RegisterController::class, 'register'])->name('register-store');
-
-// Page login
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
-// Controller Login
-Route::post('/login', [LoginController::class, 'login'])->name('login-store');
-// Controller Logout
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-// Investment (belum bikin routes)
-// Page Home (User)
 
-Route::group([
-    'middleware' => 'auth',
-], function () {
 
-    Route::group([
-        'middleware' => 'admin',
-    ], function () {
-        // Page CMS
-        Route::get('/content-management-system', [AdminController::class, 'showCMS'])->name('content-management-system');
 
-        Route::get('/investments', [InvestmentController::class, 'index'])->name('investments.index');
-        Route::get('/investments/create', [InvestmentController::class, 'create'])->name('investments.create');
-        Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
-        Route::get('/investments/{investment}', [InvestmentController::class, 'show'])->name('investments.show');
-        Route::get('/investments/{investment}/edit', [InvestmentController::class, 'edit'])->name('investments.edit');
-        Route::put('/investments/{investment}', [InvestmentController::class, 'update'])->name('investments.update');
-        Route::delete('/investments/{investment}', [InvestmentController::class, 'destroy'])->name('investments.destroy');
-    });
 
-    // Page Home
 
-    // Page Profile
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile-page');
-    // Page Edit Profile
-    Route::get('/edit-profile', [ProfileController::class, 'showEditProfileForm'])->name('edit-profile-form');
-    // Controller Edit Profile
-    Route::post('/edit-profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
 
-    // Page Edit Password
-    Route::get('/edit-password', [ProfileController::class, 'showEditPasswordForm'])->name('edit-password-form');
-    // Controller Edit Password
-    Route::post('/edit-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
-    // Page Edit Account Bank
-    Route::get('/edit-bank-account', [ProfileController::class, 'showEditBankAccount'])->name('edit-bank-account-form');
 
-    // Controller Edit Account Bank
-    Route::post('/update-bank-account', [ProfileController::class, 'updateBankAccount'])->name('update-bank-account');
-});
+
+
+
