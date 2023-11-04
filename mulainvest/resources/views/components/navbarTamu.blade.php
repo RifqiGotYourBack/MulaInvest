@@ -1,5 +1,5 @@
 <body>
-    
+
     <nav class="navbar navbar-expand-lg px-5" style="background-color: #0198a3">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
@@ -22,8 +22,7 @@
             </ul>
           </div>
           <div class="">
-            <a class="btn btn-warning btn-sm" href="{{ route('login') }}" role="button">Login as User</a>
-            <a class="btn btn-outline-light btn-sm" href="{{ route('loginAdmin') }}" role="button">Login as Admin</a>
+            <a class="btn btn-warning btn-sm" href="{{ route('login') }}" role="button">Login</a>
           </div>
         </div>
       </nav>

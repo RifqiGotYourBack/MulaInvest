@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputAlamat">Alamat</label>
-                        <input type="text" class="form-control" id="inputAlamat" placeholder="Jln. xx" name="address" />
+                        <input type="text" class="form-control" id="inputAlamat" placeholder="Jln. xx" name="address" value="{{ old('address', $user->Address) }}" />
                     </div>
                     <div class="d-flex justify-content-end pt-4">
                         <button type="submit" class="btn btn-warning btn-outline-dark text-black"

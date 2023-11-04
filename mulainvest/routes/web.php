@@ -19,8 +19,8 @@ use App\Http\Controllers\InvestmentController;
 */
 
 Route::get('/', function () {
-        return view('berandaTamu');
-    })->name('berandaTamu');
+    return view('berandaTamu');
+})->name('berandaTamu');
 
 // autentikasi
 
@@ -64,7 +64,7 @@ Route::group([
         return view('aset');
     })->name('aset');
 
-    
+
     Route::get('/profile', [ProfileController::class, 'showEditProfileForm'])->name('profil');
 
     Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
@@ -78,9 +78,6 @@ Route::group([
     Route::post('/update-bank-account', [ProfileController::class, 'updateBankAccount'])->name('update-bank-account');
 
 
-
-
-
     Route::get('/topUp', function () {
         return view('topUp');
     })->name('topUp');
@@ -92,7 +89,14 @@ Route::group([
     Route::group([
         'middleware' => 'admin',
     ], function () {
-        // admin
+        Route::get('/invests', [InvestmentController::class, 'indexAdmin'])->name('investasiAdmin');
+        Route::post('/store-investment', [InvestmentController::class, 'store'])->name('storeInvestment');
+        Route::delete('/delete-investment/{id}', [InvestmentController::class, 'destroy'])->name('deleteInvestment');
+        Route::put('/investment/update/{id}', [InvestmentController::class, 'update'])->name('updateInvestment');
+
+
+
+
         Route::get('/admin', function () {
             return view('admin');
         })->name('admin');

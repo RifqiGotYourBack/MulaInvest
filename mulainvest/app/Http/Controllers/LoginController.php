@@ -36,7 +36,7 @@ class LoginController extends Controller
             if ($user->Role === 'user') {
                 return redirect()->route('beranda');
             } elseif ($user->Role === 'admin') {
-                return redirect()->route('content-management-system');
+                return redirect()->route('investasiAdmin');
             }
         }
 

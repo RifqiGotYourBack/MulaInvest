@@ -11,6 +11,10 @@ class Investments extends Model
 
     protected $primaryKey = 'InvestmentID';
 
+    protected $casts = [
+        'InvestmentID' => 'string',
+    ];
+    
     protected $fillable = [
         'InvestmentName', 'InvestmentType', 'InvestmentDescription', 'Available', 'InvestmentPrice', 'MinimumOrder', 'MaximumOrder'
     ];
