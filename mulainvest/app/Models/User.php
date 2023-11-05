@@ -14,6 +14,10 @@ class User extends Authenticatable
 
     protected $primaryKey = 'UserID';
 
+    protected $casts = [
+        'UserID' => 'string',
+    ];
+
     protected $fillable = [
         'Name', 'Email', 'Password', 'NoTelepon', 'Address', 'Balance', 'Role', 'IsActive'
     ];

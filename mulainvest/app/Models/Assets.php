@@ -11,8 +11,14 @@ class Assets extends Model
 
     protected $primaryKey = 'AssetID';
 
+    protected $casts = [
+        'InvestmentID' => 'string',
+        'UserID' => 'string',
+        'AssetID' => 'string',
+    ];
+
     protected $fillable = [
-        'UserID', 'InvestmentID', 'BuyValue', 'AcquisitionDate', 'SoldDate', 'IsActive'
+        'AssetID', 'UserID', 'InvestmentID', 'BuyAmount', 'BuyPrice', 'AcquisitionDate', 'SoldDate', 'IsActive'
     ];
 
     // An asset belongs to a user

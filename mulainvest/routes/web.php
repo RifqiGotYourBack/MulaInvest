@@ -56,9 +56,9 @@ Route::group([
         return view('tentang');
     })->name('tentang');
 
-    Route::get('/investasi', function () {
-        return view('investasi');
-    })->name('investasi');
+    Route::get('/investasi', [InvestmentController::class, 'index'])->name('investasi');
+    Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
+
 
     Route::get('/aset', function () {
         return view('aset');

@@ -12,7 +12,8 @@ class InvestmentController extends Controller
     {
         $investments = Investments::paginate(20);
         return view('investasi', [
-            'investments' => $investments
+            'investments' => $investments,
+            'title' => 'Investasi'
         ]);
     }
 
