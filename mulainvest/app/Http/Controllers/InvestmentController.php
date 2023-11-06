@@ -38,7 +38,7 @@ class InvestmentController extends Controller
             'InvestmentName' => 'required|string|max:255',
             'InvestmentType' => 'required|string|max:255',
             'InvestmentDescription' => 'nullable|string',
-            'Available' => 'required|boolean',
+            'Stock' => 'required|integer',
             'InvestmentPrice' => 'required|numeric',
             'MinimumOrder' => 'required|integer',
             'MaximumOrder' => 'required|integer'
@@ -51,7 +51,7 @@ class InvestmentController extends Controller
         $investment->InvestmentName = $request->input('InvestmentName');
         $investment->InvestmentType = $request->input('InvestmentType');
         $investment->InvestmentDescription = $request->input('InvestmentDescription');
-        $investment->Available = $request->input('Available');
+        $investment->Stock = $request->input('Stock');
         $investment->InvestmentPrice = $request->input('InvestmentPrice');
         $investment->MinimumOrder = $request->input('MinimumOrder');
         $investment->MaximumOrder = $request->input('MaximumOrder');
@@ -83,7 +83,7 @@ class InvestmentController extends Controller
             'InvestmentName' => 'required|string|max:255',
             'InvestmentType' => 'required|string|max:255',
             'InvestmentDescription' => 'nullable|string',
-            'Available' => 'required|boolean',
+            'Stock' => 'required|integer',
             'InvestmentPrice' => 'required|numeric',
             'MinimumOrder' => 'required|integer',
             'MaximumOrder' => 'required|integer'
