@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\BankAccounts;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Investments;
@@ -48,7 +50,7 @@ class DatabaseSeeder extends Seeder
             'InvestmentName' => 'Investasi 1',
             'InvestmentType' => 'Jenis Investasi 1',
             'InvestmentDescription' => 'Deskripsi Investasi 1',
-            'Available' => true,
+            'Stock' => 100,
             'InvestmentPrice' => 1000.00,
             'MinimumOrder' => 10,
             'MaximumOrder' => 50,
@@ -59,10 +61,17 @@ class DatabaseSeeder extends Seeder
             'InvestmentName' => 'Investasi 2',
             'InvestmentType' => 'Jenis Investasi 2',
             'InvestmentDescription' => 'Deskripsi Investasi 2',
-            'Available' => true,
+            'Stock' => 100,
             'InvestmentPrice' => 1500.00,
             'MinimumOrder' => 5,
             'MaximumOrder' => 30,
+        ]);
+
+        BankAccounts::create([
+            'UserID' => 'usr12',
+            'BankName' => 'Bank golput', 
+            'BankAccountNumber' => '01923876', 
+            'Address' => 'Jl. Aku pusing dan mual', 
         ]);
     }
 }

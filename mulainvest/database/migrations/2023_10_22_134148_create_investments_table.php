@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('InvestmentName');
             $table->string('InvestmentType');
             $table->text('InvestmentDescription')->nullable();
-            $table->boolean('Available')->default(true);
+            $table->integer('Stock');
             $table->decimal('InvestmentPrice', 10, 2);
             $table->integer('MinimumOrder');
             $table->integer('MaximumOrder');
