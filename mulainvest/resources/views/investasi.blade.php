@@ -60,7 +60,7 @@
                     <td>{{ $investment->InvestmentID }}</td>
                     <td>{{ $investment->InvestmentName }}</td>
                     <td>{{ $investment->InvestmentType }}</td>
-                    <td>{{ $investment->Available }}</td>
+                    <td>{{ $investment->Stock }}</td>
                     <td>{{ $investment->InvestmentPrice }}</td>
                     <td>{{ $investment->MinimumOrder }}</td>
                     <td>{{ $investment->MaximumOrder }}</td>

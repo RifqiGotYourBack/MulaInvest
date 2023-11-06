@@ -45,11 +45,8 @@
 
         <!-- Tersedia (Ya/Tidak) -->
         <div class="mb-3">
-         <label for="Available" class="col-form-label">Tersedia</label>
-         <select class="form-select" id="Available" name="Available">
-          <option value="1">Ya</option>
-          <option value="0">Tidak</option>
-         </select>
+         <label for="Stock" class="col-form-label">Tersedia</label>
+         <input type="text" class="form-control" id="Stock" name="Stock" required />
         </div>
 
         <!-- Harga -->
@@ -140,7 +137,7 @@
      <td>{{ $investment->InvestmentID }}</td>
      <td>{{ $investment->InvestmentName }}</td>
      <td>{{ $investment->InvestmentType }}</td>
-     <td>{{ $investment->Available }}</td>
+     <td>{{ $investment->Stock }}</td>
      <td>{{ $investment->InvestmentPrice }}</td>
      <td>{{ $investment->MinimumOrder }}</td>
      <td>{{ $investment->MaximumOrder }}</td>
@@ -206,11 +203,9 @@
            </div>
 
            <div class="mb-3">
-            <label for="Available" class="col-form-label">Tersedia</label>
-            <select class="form-select" id="Available" name="Available">
-             <option value="1" @if($investment->Available == 1) selected @endif>Ya</option>
-             <option value="0" @if($investment->Available == 0) selected @endif>Tidak</option>
-            </select>
+            <label for="Stock" class="col-form-label">Tersedia</label>
+            <input type="text" class="form-control" id="Stock" name="Stock"
+             value="{{ $investment->Stock }}" />
            </div>
 
            <div class="mb-3">
