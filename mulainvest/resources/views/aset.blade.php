@@ -5,10 +5,7 @@
     <div class="container-fluid d-flex justify-content-center align-items-center py-5" style="height: 300px">
       <div class="d-flex flex-column justify-content-between bg-warning p-4 border border-warning border-3 border-end-0 rounded-start col-3" style="height: 150px">
         <div>
-          <h4 class="fw-bold">Balance portofolio</h4>
-        </div>
-        <div>
-          <h4>Rp.<span>1000000</span></h4>
+          <h4>Rp.<span>{{ number_format($totalBalance, 2) }}</span></h4>
         </div>
       </div>
 
@@ -29,6 +26,11 @@
     </div>
 
     <!-- bagian table -->
+    @if($assets->isEmpty())
+      <div class="alert alert-warning" role="alert">
+        You have no assets.
+      </div>
+    @else
     <div class="py-5">
       <table class="table table-bordered table-hover text-center" style="vertical-align: middle; width: 1000px">
         <thead class="table-warning">
@@ -43,14 +45,15 @@
         </thead>
         <tbody>
           <tr>
-            <td>IDX80</td>
-            <td>BBRI</td>
-            <td>100</td>
-            <td>3200</td>
-
-            <td>5000</td>
-            <!-- button crud -->
-            <td>
+           @foreach($assets as $asset)
+            <tr>
+              <td>{{ $asset->InvestmentID }}</td>
+              <td>{{ $asset->InvestmentName }}</td>
+              <td>{{ $asset->BuyAmount }}</td>
+              <td>{{ number_format($asset->BuyPrice, 2) }}</td>
+              <td>{{ number_format($asset->LatestPrice, 2) }}</td>
+              <td>
+            
               <!-- Button trigger modal -->
 
               <button type="button" class="btn" style="background-color: transparent; border: none" data-bs-toggle="modal" data-bs-target="#edit" data-bs-whatever="@mdo">
@@ -111,9 +114,12 @@
               <!--end modal  -->
             </td>
           </tr>
+          @endforeach
         </tbody>
       </table>
     </div>
+    @endif
+    
   </div>
 
 @include('components.footer')
