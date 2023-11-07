@@ -66,9 +66,13 @@ class AssetController extends Controller
 
         $assets = Assets::where('UserID', $userID)
             ->join('investments', 'assets.InvestmentID', '=', 'investments.InvestmentID')
-            ->select('assets.InvestmentID', 'investments.InvestmentName', 'assets.BuyAmount', 'assets.BuyPrice', 'investments.InvestmentPrice as LatestPrice')
+            ->select('assets.*', 'investments.InvestmentName', 'investments.InvestmentPrice as LatestPrice')
             ->get();
+  
+            $totalBalance = $assets->sum(function ($asset) {
+                return $asset->BuyAmount * $asset->LatestPrice;
+            });
 
-        return view('assets.index', compact('assets'));
+            return view('aset', ['assets' => $assets, 'totalBalance' => $totalBalance]);
     }
 }

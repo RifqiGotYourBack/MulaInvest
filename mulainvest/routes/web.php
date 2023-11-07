@@ -64,6 +64,8 @@ Route::group([
         return view('aset');
     })->name('aset');
 
+    Route::get('/aset', [AssetController::class, 'index'])->name('aset');
+
 
     Route::get('/profile', [ProfileController::class, 'showEditProfileForm'])->name('profil');
 
