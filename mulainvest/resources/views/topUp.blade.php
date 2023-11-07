@@ -8,10 +8,10 @@
         <div class="col-3">
           <div class="list-group">
             <a class="list-group-item list-group-item-action active text-center fw-bold" style="background-color: #0198a3" aria-current="true">Balance</a>
-            <a href="{{ route('profil') }}" class="list-group-item list-group-item-action" style="background-color: #cee5e6">Profil</a>
-            <a href="{{ route('bankAkun') }}" class="list-group-item list-group-item-action" style="background-color: #cee5e6">Bank Akun</a>
-            <a href="{{ route('topUp') }}" class="list-group-item list-group-item-action" style="background-color: #cee5e6">Top Up</a>
-            <a href="#" class="list-group-item list-group-item-action" style="background-color: #cee5e6">Bantuan</a>
+            <a href="{{ route('profil') }}" class="list-group-item list-group-item-action hoverSidebar" style="background-color: #cee5e6">Profil</a>
+            <a href="{{ route('bankAkun') }}" class="list-group-item list-group-item-action hoverSidebar" style="background-color: #cee5e6">Bank Akun</a>
+            <a href="{{ route('topUp') }}" class="list-group-item list-group-item-action hoverSidebar" style="background-color: #cee5e6">Top Up</a>
+            <a href="{{ route('faq') }}" class="list-group-item list-group-item-action hoverSidebar" style="background-color: #cee5e6">FAQ</a>
           </div>
         </div>
         <!-- Div Kedua untuk Form -->
@@ -28,7 +28,8 @@
                 <option disabled selected>--Pilih Metode Pembayaran--</option>
                 <option>Gopay</option>
                 <option>Shopee</option>
-                <option>Pinjam dulu seratus</option>
+                <option>
+                  Pinjam dulu seratus</option>
               </select>
             </div>
             <div class="form-group mb-3">

@@ -22,7 +22,8 @@
             </ul>
           </div>
           <div class="">
-            <a class="btn btn-warning btn-sm" href="{{ route('login') }}" role="button">Login</a>
+            <a class="btn btn-warning btn-outline-dark btn-md" style="width: 100px;" href="{{ route('login') }}" role="button">Login</a>  
+            
           </div>
         </div>
       </nav>

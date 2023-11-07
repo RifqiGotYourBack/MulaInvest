@@ -7,13 +7,15 @@
         <div class="text-white w-75">
             <h3>Selamat Datang <span class="text-warning">Mulavers</span> !</h3>
             <p>Daftarkan diri anda dengan mudah dan mulai investasi</p>
-            <img src="images/register.png" width="360px" alt="register" />
+            <img src="{{asset('images/register.png')}}" width="360px" alt="register" />
         </div>
         <!-- kanan -->
     </div>
-    <div class="d-flex flex-column justify-content-center align-items-center bg-white col-5 py-5">
-        <img class="pt-5 pb-3" src="images/logoRegist.png" alt="" width="110px" />
-        <div class="w-75">
+    <div class="d-flex flex-column justify-content-center align-items-center bg-white col-5 ">
+        <a href="{{ route('berandaTamu') }}">
+            <img src="{{asset('images/logoRegist.png')}}" alt="mulainvest" width="110px" />
+        </a>
+        <div class="w-75 h-75">
             <h6 class="pt-3 fw-bold">Daftar Akun</h6>
             @if ($errors->any() || session('error'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -39,28 +41,28 @@
             <!-- form normal -->
             <form class="" method="post" action="{{ route('register-store') }}">
                 @csrf
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="inputNama" class="form-label" style="font-size: 14px">Nama</label>
                     <input type="text" class="form-control form-control-sm" id="inputNama" aria-describedby="emailHelp"
                         name="full_name" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="inputEmail" class="form-label" style="font-size: 15px">Email address</label>
                     <input type="email" class="form-control form-control-sm" id="inputEmail"
                         aria-describedby="emailHelp" name="email" />
                     <div id="emailHelp" class="form-text text-black-50" style="font-size: 11px">Data privasi email anda
                         terlindungi</div>
                 </div>
-                <div class="mb-3">
-                    <label for="inputName" class="form-label" style="font-size: 15px">Password</label>
+                <div class="mb-2">
+                    <label for="inputPassword" class="form-label" style="font-size: 15px">Password</label>
                     <input type="password" name="password" class="form-control form-control-sm" id="inputName" />
                 </div>
-                <div class="mb-3">
-                    <label for="inputName" class="form-label" style="font-size: 15px">Password</label>
+                <div class="mb-2">
+                    <label for="inputPassword" class="form-label" style="font-size: 15px">Konfirmasi Password</label>
                     <input type="password" name="password_confirmation" class="form-control form-control-sm"
                         id="inputName" />
                 </div>
-                <div class="mb-3 form-check">
+                <div class="mb-2 form-check">
                     <input type="checkbox" class="form-check-input" id="loginCheck" required />
                     <label class="form-check-label text-black-50" for="loginCheck" style="font-size: 10px">Dengan
                         menekan tombol daftar, saya menyetujui <span><a href="#" class="text-black"> Syarat dan
@@ -70,7 +72,7 @@
                 <button type="submit" class="btn btn-primary col-4 my-2 btn-sm">Daftar Akun</button>
             </form>
             <!-- form normal -->
-            <p class="text-center pt-5 pb-3" style="font-size: 14px">Sudah punya akun? <a href="{{ route('login') }}"
+            <p class="text-center  pb-3" style="font-size: 14px">Sudah punya akun? <a href="{{ route('login') }}"
                     class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Masuk
                 </a></p>
         </div>

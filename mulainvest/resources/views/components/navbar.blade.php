@@ -34,32 +34,32 @@
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
               <a class="dropdown-item" href="{{ route('profil') }}">
-                <img class="me-2" src="images/profil.png" alt="profil-logo" width="23px" />
+                <img class="me-2" src="{{ asset('images/profil.png') }}" alt="profil-logo" width="23px" />
                 Profil</a
               >
             </li>
             <li>
               <a class="dropdown-item" href="{{ route('bankAkun') }}">
-                <img class="me-2" src="images/saldo.png" alt="saldo" width="23px" />
+                <img class="me-2" src="{{ asset('images/saldo.png') }}" alt="saldo" width="23px" />
                 Saldo</a
               >
             </li>
             <li>
               <a class="dropdown-item" href="{{ route('gantiPassword') }}">
-                <img class="me-2" class="me-2" src="images/gantiPass.png" alt="gantipass" width="23px" />
+                <img class="me-2" class="me-2" src="{{ asset('images/gantiPass.png') }}" alt="gantipass" width="23px" />
                 Ganti Password</a
               >
             </li>
             <li>
-              <a class="dropdown-item" href="#">
-                <img class="me-2" src="images/bantuan.png" alt="bantuan" width="23px" />
-                Bantuan</a
+              <a class="dropdown-item" href="{{ route('faq') }}">
+                <img class="me-2" src="{{ asset('images/faq.png') }}" alt="FAQ" width="23px" />
+                FAQ</a
               >
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}">
-                <img class="me-2" src="images/keluar.png" alt="keluar" width="23px" />
+                <img class="me-2" src="{{ asset('images/keluar.png') }}" alt="keluar" width="23px" />
                 Keluar</a
               >
             </li>

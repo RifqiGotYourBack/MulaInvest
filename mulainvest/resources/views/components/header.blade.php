@@ -35,6 +35,28 @@
         .white {
           color: white;
         }
+        .hoverCard {
+        border-width: 3px;
+        border-color: black;
+        background-color: white;
+        transition: background-color 0.4s; 
+        }
+
+        .hoverCard:hover {
+        background-color: #FFC232;
+        border-width: 3px;
+        border-color: #FFC232;
+        }
+        
+        .hoverSidebar {
+        text-decoration: none;
+        font-weight: 400;
+        transition:  0.15s; 
+        }
+
+        .hoverSidebar:hover {
+        font-weight: 650;
+        }
       }
     </style>
   </head>

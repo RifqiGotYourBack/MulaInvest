@@ -16,7 +16,7 @@ class Investments extends Model
     ];
     
     protected $fillable = [
-        'InvestmentName', 'InvestmentType', 'InvestmentDescription', 'Available', 'InvestmentPrice', 'MinimumOrder', 'MaximumOrder'
+        'InvestmentName', 'InvestmentType', 'InvestmentDescription', 'Stock', 'InvestmentPrice', 'MinimumOrder', 'MaximumOrder'
     ];
 
     // An investment has many assets

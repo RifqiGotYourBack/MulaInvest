@@ -12,10 +12,12 @@
    <h4 class="text-center">Admin</h4>
    <!-- end title -->
    <!-- modal -->
-   <button type="button" class="btn ms-3 text-white fw-bold" style="background-color: #0198a3" data-bs-toggle="modal"
-    data-bs-target="#exampleModal" data-bs-whatever="@mdo">Tambah Data</button>
+   <button type="button" class="btn ms-4 text-white fw-bold btn-sm" style="background-color: #0198a3" data-bs-toggle="modal"
+    data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+    <img src="{{ asset('images/tambahData.png') }}" width="25px" alt="tambah data" >
+    Tambah Data</button>
 
-   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
      <div class="modal-content" style="background-color: #cee5e6">
       <div class="modal-header text-white" style="background-color: #0198a3">
@@ -31,31 +33,27 @@
          <input type="text" class="form-control" id="InvestmentName" name="InvestmentName" required />
         </div>
 
+        <!-- Tersedia & harga -->
+        <div class="row">
+
+          <!-- Tersedia (Ya/Tidak) -->
+          <div class="col-6 mb-3">
+            <label for="Stock" class="col-form-label">Tersedia</label>
+            <input type="number" class="form-control" id="Stock" name="Stock" required />
+          </div>
+ 
+         <!-- Harga -->
+         <div class="col-6 mb-3">
+            <label for="InvestmentPrice" class="col-form-label">Harga</label>
+            <input type="text" class="form-control" id="InvestmentPrice" name="InvestmentPrice" required />
+         </div>
+
+        </div>
+
         <!-- Tipe Investasi -->
         <div class="mb-3">
          <label for="InvestmentType" class="col-form-label">Tipe Investasi</label>
          <input type="text" class="form-control" id="InvestmentType" name="InvestmentType" required />
-        </div>
-
-        <!-- Deskripsi -->
-        <div class="mb-3">
-         <label for="InvestmentDescription" class="col-form-label">Deskripsi</label>
-         <textarea class="form-control" id="InvestmentDescription" name="InvestmentDescription"></textarea>
-        </div>
-
-        <!-- Tersedia (Ya/Tidak) -->
-        <div class="mb-3">
-         <label for="Available" class="col-form-label">Tersedia</label>
-         <select class="form-select" id="Available" name="Available">
-          <option value="1">Ya</option>
-          <option value="0">Tidak</option>
-         </select>
-        </div>
-
-        <!-- Harga -->
-        <div class="mb-3">
-         <label for="InvestmentPrice" class="col-form-label">Harga</label>
-         <input type="text" class="form-control" id="InvestmentPrice" name="InvestmentPrice" required />
         </div>
 
         <!-- Minimum Order dan Maximum Order -->
@@ -65,10 +63,17 @@
           <input type="number" class="form-control" id="MinimumOrder" name="MinimumOrder" required />
          </div>
          <div class="col-6 mb-3">
-          <label for="MaximumOrder" class="form-label">Maximum Order</label>
+          <label for="MaximumOrder" class="form-label">Maksimum Order</label>
           <input type="number" class="form-control" id="MaximumOrder" name="MaximumOrder" required />
          </div>
         </div>
+
+        <!-- Deskripsi -->
+        <div class="mb-3">
+          <label for="InvestmentDescription" class="col-form-label">Deskripsi</label>
+          <textarea class="form-control" id="InvestmentDescription" name="InvestmentDescription"></textarea>
+         </div>
+ 
 
         <div class="modal-footer">
          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
@@ -140,7 +145,7 @@
      <td>{{ $investment->InvestmentID }}</td>
      <td>{{ $investment->InvestmentName }}</td>
      <td>{{ $investment->InvestmentType }}</td>
-     <td>{{ $investment->Available }}</td>
+     <td>{{ $investment->Stock }}</td>
      <td>{{ $investment->InvestmentPrice }}</td>
      <td>{{ $investment->MinimumOrder }}</td>
      <td>{{ $investment->MaximumOrder }}</td>
@@ -149,7 +154,7 @@
       <!-- Button trigger modal -->
       <button type="button" class="btn" data-bs-toggle="modal"
        data-bs-target="#buttonHapus{{ $investment->InvestmentID }}">
-       <img src="images/hapus.png" class="" width="30px" alt="" />
+       <img src="{{ asset('images/hapus.png') }}" class="" width="30px" alt="" />
       </button>
 
       <!-- Modal -->
@@ -178,7 +183,7 @@
 
       <button type="button" class="btn" style="background-color: transparent; border: none" data-bs-toggle="modal"
        data-bs-target="#edit" data-bs-whatever="@mdo">
-       <img src="images/edit.png" width="30px" alt="" />
+       <img src="{{ asset('images/edit.png') }}" width="30px" alt="" />
       </button>
 
       <div class="modal fade text-start" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -199,36 +204,38 @@
              value="{{ $investment->InvestmentName }}" />
            </div>
 
+           <div class="row">
+            <div class="col-6 mb-3">
+              <label for="Stock" class="col-form-label">Tersedia</label>
+              <input type="text" class="form-control" id="Stock" name="Stock"
+               value="{{ $investment->Stock }}" />
+             </div>
+             <div class="col-6 mb-3">
+              <label for="InvestmentPrice" class="col-form-label">Harga Investasi</label>
+              <input type="text" class="form-control" id="InvestmentPrice" name="InvestmentPrice"
+               value="{{ $investment->InvestmentPrice }}" />
+             </div>
+           </div>
+
            <div class="mb-3">
             <label for="InvestmentType" class="col-form-label">Tipe Investasi</label>
             <input type="text" class="form-control" id="InvestmentType" name="InvestmentType"
              value="{{ $investment->InvestmentType }}" />
-           </div>
-
-           <div class="mb-3">
-            <label for="Available" class="col-form-label">Tersedia</label>
-            <select class="form-select" id="Available" name="Available">
-             <option value="1" @if($investment->Available == 1) selected @endif>Ya</option>
-             <option value="0" @if($investment->Available == 0) selected @endif>Tidak</option>
             </select>
            </div>
 
-           <div class="mb-3">
-            <label for="InvestmentPrice" class="col-form-label">Harga Investasi</label>
-            <input type="text" class="form-control" id="InvestmentPrice" name="InvestmentPrice"
-             value="{{ $investment->InvestmentPrice }}" />
-           </div>
-
-           <div class="mb-3">
-            <label for="MinimumOrder" class="col-form-label">Pesanan Minimum</label>
-            <input type="number" class="form-control" id="MinimumOrder" name="MinimumOrder"
-             value="{{ $investment->MinimumOrder }}" />
-           </div>
-
-           <div class="mb-3">
-            <label for="MaximumOrder" class="col-form-label">Pesanan Maksimum</label>
-            <input type="number" class="form-control" id="MaximumOrder" name="MaximumOrder"
-             value="{{ $investment->MaximumOrder }}" />
+           <div class="row">
+            <div class="col-6 mb-3">
+              <label for="MinimumOrder" class="col-form-label">Minimun Order</label>
+              <input type="number" class="form-control" id="MinimumOrder" name="MinimumOrder"
+               value="{{ $investment->MinimumOrder }}" />
+             </div>
+  
+             <div class="col-6 mb-3">
+              <label for="MaximumOrder" class="col-form-label">Maksimum Order</label>
+              <input type="number" class="form-control" id="MaximumOrder" name="MaximumOrder"
+               value="{{ $investment->MaximumOrder }}" />
+             </div>
            </div>
 
            <!-- Tambahkan input lain sesuai dengan atribut yang ingin diedit -->
