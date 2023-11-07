@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +26,7 @@ class LoginController extends Controller
         ]);
 
         // Fetch user pakai Email
-        $user = Users::where('Email', $request->email)->where('IsActive', 1)->first();
+        $user = User::where('Email', $request->email)->where('IsActive', 1)->first();
 
         // Login Logic
         if ($user && Hash::check($request->password, $user->Password)) {
@@ -33,9 +34,9 @@ class LoginController extends Controller
 
             // Handle role user
             if ($user->Role === 'user') {
-                return redirect()->route('user-home');
+                return redirect()->route('beranda');
             } elseif ($user->Role === 'admin') {
-                return redirect()->route('content-management-system');
+                return redirect()->route('investasiAdmin');
             }
         }
 
@@ -47,6 +48,6 @@ class LoginController extends Controller
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('login.form');
+        return redirect()->route('login');
     }
 }

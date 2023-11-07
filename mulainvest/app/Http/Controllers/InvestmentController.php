@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -6,11 +7,21 @@ use App\Models\Investments;
 
 class InvestmentController extends Controller
 {
-   // Get all investments
+    // Get all investments
     public function index()
     {
-        $investments = Investments::all();
-        return view('investments.index', compact('investments'));
+        $investments = Investments::paginate(20);
+        return view('investasi', [
+            'investments' => $investments
+        ]);
+    }
+
+    public function indexAdmin()
+    {
+        $investments = Investments::paginate(20);
+        return view('investasiAdmin', [
+            'investments' => $investments
+        ]);
     }
 
     // Show add investment form
@@ -32,9 +43,22 @@ class InvestmentController extends Controller
             'MaximumOrder' => 'required|integer'
         ]);
 
-        Investments::create($request->all());
-        return redirect()->route('investments.index')
-                         ->with('success', 'Investment created successfully.');
+        $investment = new Investments();
+
+        // Generate InvestmentID as a 5-digit zero-padded random number
+        $investment->InvestmentID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+        $investment->InvestmentName = $request->input('InvestmentName');
+        $investment->InvestmentType = $request->input('InvestmentType');
+        $investment->InvestmentDescription = $request->input('InvestmentDescription');
+        $investment->Available = $request->input('Available');
+        $investment->InvestmentPrice = $request->input('InvestmentPrice');
+        $investment->MinimumOrder = $request->input('MinimumOrder');
+        $investment->MaximumOrder = $request->input('MaximumOrder');
+
+        $investment->save();
+
+        return redirect()->route('investasiAdmin')
+            ->with('success', 'Investment created successfully.');
     }
 
     /**
@@ -52,7 +76,7 @@ class InvestmentController extends Controller
     }
 
     // Update an investment
-    public function update(Request $request, Investments $investment)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'InvestmentName' => 'required|string|max:255',
@@ -64,16 +88,19 @@ class InvestmentController extends Controller
             'MaximumOrder' => 'required|integer'
         ]);
 
+        $investment = Investments::find($id);
+
         $investment->update($request->all());
-        return redirect()->route('investments.index')
-                         ->with('success', 'Investment updated successfully.');
+        return redirect()->route('investasiAdmin')
+            ->with('success', 'Investment updated successfully.');
     }
 
     // Delete an Investment
-    public function destroy(Investments $investment)
+    public function destroy($id)
     {
+        $investment = Investments::find($id);
         $investment->delete();
-        return redirect()->route('investments.index')
-                         ->with('success', 'Investment deleted successfully.');
+        return redirect()->route('investasiAdmin')
+            ->with('success', 'Investment deleted successfully.');
     }
 }

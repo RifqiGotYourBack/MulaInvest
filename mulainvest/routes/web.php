@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AssetController;
+use App\Http\Controllers\InvestmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,47 +19,108 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('berandaTamu');
+})->name('berandaTamu');
 
-// Page Registrasi
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register-form');
-// Controller Registrasi
-Route::post('/register', [RegisterController::class, 'register'])->name('register-store');
+// autentikasi
 
-// Page login
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
-// Controller Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');;
+
 Route::post('/login', [LoginController::class, 'login'])->name('login-store');
-// Controller Logout
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register')->middleware('guest');;
+
+Route::post('/register', [RegisterController::class, 'register'])->name('register-store')->middleware('guest');;
+
+Route::get('/loginAdmin', function () {
+    return view('loginAdmin');
+})->name('loginAdmin');
 
 
-// Investment (belum bikin routes)
-// Page Home (User)
+Route::get('/registerAdmin', function () {
+    return view('registerAdmin');
+})->name('registerAdmin');
 
 Route::group([
     'middleware' => 'auth',
 ], function () {
 
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    // bagian utama
+    Route::get('/beranda', function () {
+        return view('beranda');
+    })->name('beranda');
+
+    Route::get('/tentang', function () {
+        return view('tentang');
+    })->name('tentang');
+
+    Route::get('/investasi', function () {
+        return view('investasi');
+    })->name('investasi');
+
+    Route::get('/aset', function () {
+        return view('aset');
+    })->name('aset');
+
+
+    Route::get('/profile', [ProfileController::class, 'showEditProfileForm'])->name('profil');
+
+    Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
+
+    Route::get('/edit-password', [ProfileController::class, 'showEditPasswordForm'])->name('gantiPassword');
+
+    Route::post('/edit-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+
+    Route::get('/edit-bank-account', [ProfileController::class, 'showEditBankAccount'])->name('bankAkun');
+
+    Route::post('/update-bank-account', [ProfileController::class, 'updateBankAccount'])->name('update-bank-account');
+
+
+    Route::get('/topUp', function () {
+        return view('topUp');
+    })->name('topUp');
+
+    Route::get('/bantuan', function () {
+        return view('bantuan');
+    })->name('bantuan');
+
     Route::group([
         'middleware' => 'admin',
     ], function () {
-        // Page CMS
-        Route::get('/content-management-system', [AdminController::class, 'showCMS'])->name('content-management-system');
+        Route::get('/invests', [InvestmentController::class, 'indexAdmin'])->name('investasiAdmin');
+        Route::post('/store-investment', [InvestmentController::class, 'store'])->name('storeInvestment');
+        Route::delete('/delete-investment/{id}', [InvestmentController::class, 'destroy'])->name('deleteInvestment');
+        Route::put('/investment/update/{id}', [InvestmentController::class, 'update'])->name('updateInvestment');
+
+
+
+
+        Route::get('/admin', function () {
+            return view('admin');
+        })->name('admin');
+
+        Route::get('/pasarUang', function () {
+            return view('pasarUang');
+        })->name('pasarUang');
+
+        Route::get('/obligasi', function () {
+            return view('obligasi');
+        })->name('obligasi');
     });
+});
 
-    // Page Home
-    
-    // Page Profile
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile-page');
-    // Page Edit Profile
-    Route::get('/edit-profile', [ProfileController::class, 'showEditProfileForm'])->name('edit-profile-form');
-    // Controller Edit Profile
-    Route::post('/edit-profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
 
-    // Page Edit Password
-    Route::get('/edit-password', [ProfileController::class, 'showEditPasswordForm'])->name('edit-password-form');
-    // Controller Edit Password
-    Route::post('/edit-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+
+
+
+
+Route::get('/coba', function () {
+    return view('coba');
+})->name('coba');
+
+
+Route::get('/index', function () {
+    return view('index');
 });
