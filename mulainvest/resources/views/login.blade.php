@@ -6,12 +6,14 @@
         <div class="text-white w-75">
             <h3>Selamat Datang <span class="text-warning">Mulavers</span> !</h3>
             <p>Segera ambil langkah awal dalam investasi beersama mulainvest</p>
-            <img src="images/login.png" width="360px" alt="login.png" />
+            <img src="{{asset('images/login.png')}}" width="360px" alt="login" />
         </div>
     </div>
     <div class="d-flex flex-column justify-content-center align-items-center bg-white col-5 py-5">
-        <img src="images/logoRegist.png" alt="" width="110px" />
-        <div class="py-3 w-75">
+        <a href="{{ route('berandaTamu') }}">
+            <img src="{{asset('images/logoRegist.png')}}" alt="mulainvest" width="110px" />
+        </a>
+        <div class="py-3 w-75 h-75 ">
             <h6 class="pt-3 fw-bold">Masuk</h6>
             @if ($errors->any() || session('error'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">

@@ -1,7 +1,7 @@
 @include('components.header')
 @include('components.navbar')
     
-<div class="">
+<div class="pb-5" >
     <div class="d-flex flex-column justify-content-center text-center" style="height: 260px">
       <h2 class="">Tentang kami</h2>
     </div>

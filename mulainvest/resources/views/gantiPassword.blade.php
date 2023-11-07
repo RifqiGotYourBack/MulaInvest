@@ -5,15 +5,17 @@
         <!-- Div Pertama untuk Tabel -->
         <div class="col-3">
             <div class="list-group">
-                <a class="list-group-item list-group-item-action active text-center fw-bold"
-                    style="background-color: #0198a3" aria-current="true">Profil investor</a>
-                <a href="{{ route('profil') }}" class="list-group-item list-group-item-action"
-                    style="background-color: #cee5e6">Profil</a>
-                <a href="{{ route('bankAkun') }}" class="list-group-item list-group-item-action"
-                    style="background-color: #cee5e6">Balance</a>
-                <a href="{{ route('gantiPassword') }}" class="list-group-item list-group-item-action"
+                <a class="list-group-item list-group-item-action  text-center fw-bold text-light"
+                    style="background-color: #0198a3" aria-current="true"> Profil investor </a>
+                <a href="{{ route('profil') }}" class="list-group-item list-group-item-action hoverSidebar"
+                    style="background-color: #cee5e6;" 
+                  >Profil</a>
+                <a href="{{ route('bankAkun') }}" class="list-group-item list-group-item-action hoverSidebar"
+                    style="background-color: #cee5e6">Bank Account</a>
+                <a href="{{ route('gantiPassword') }}" class="list-group-item list-group-item-action hoverSidebar"
                     style="background-color: #cee5e6">Ganti Password</a>
-                <a href="#" class="list-group-item list-group-item-action" style="background-color: #cee5e6">Bantuan</a>
+                <a href="{{ route('faq') }}" class="list-group-item list-group-item-action hoverSidebar"
+                    style="background-color: #cee5e6">FAQ</a>
             </div>
         </div>
         <!-- Div Kedua untuk Form -->
@@ -45,20 +47,19 @@
                 @csrf
                 <div class="form-group mb-3">
                     <label for="inputOldPassword">Password Lama</label>
-                    <input type="password" class="form-control" name="old_password" id="inputOldPassword" />
+                    <input type="password" class="form-control" name="old_password" id="inputOldPassword" required/>
                 </div>
                 <div class="form-group mb-3">
                     <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" id="inputPassword" name="password" />
+                    <input type="password" class="form-control" id="inputPassword" name="password" required/>
                 </div>
                 <div class="form-group mb-3">
                     <label for="inputkonfirmPassword">Konfirmasi Password</label>
-                    <input type="password" class="form-control" id="inputkonfirmPassword" name="confirm" />
+                    <input type="password" class="form-control" id="inputkonfirmPassword" name="confirm" required/>
                 </div>
-                <div class="d-flex justify-content-end pt-4">
-                    <button type="submit" class="btn btn-warning btn-outline-dark text-black"
-                        style="width: 150px; font-weight: 400" onmouseover="this.style.fontWeight='600'"
-                        onmouseout="this.style.fontWeight='400'">Change</button>
+                <div class="d-flex justify-content-end ">
+
+                        <button type="submit" class="btn btn-warning btn-outline-dark mt-2" style="width: 150px" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Password</button>
                 </div>
             </form>
         </div>

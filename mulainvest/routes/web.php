@@ -59,7 +59,7 @@ Route::group([
     Route::get('/investasi', [InvestmentController::class, 'index'])->name('investasi');
     Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
 
-
+    
     Route::get('/aset', function () {
         return view('aset');
     })->name('aset');
@@ -82,9 +82,9 @@ Route::group([
         return view('topUp');
     })->name('topUp');
 
-    Route::get('/bantuan', function () {
-        return view('bantuan');
-    })->name('bantuan');
+    Route::get('/faq', function () {
+        return view('faq');
+    })->name('faq');
 
     Route::group([
         'middleware' => 'admin',

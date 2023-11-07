@@ -15,13 +15,13 @@
       <div class="col-6 d-flex justify-content-center align-items-center border border border-warning border-3 border-start-0 rounded-end" style="height: 150px">
         <div class="col-4 d-flex justify-content-center">
           <a class="text-center text-black" href="{{ route('investasi') }}">
-            <img src="images/investasi.png" width="50px" alt="investasi" />
+            <img src="{{asset('images/investasiku.png')}}" width="50px" alt="investasi" />
             <h6>Investasi</h6>
           </a>
         </div>
         <div class="col-4 d-flex justify-content-center">
           <a class="text-center text-black" href="#">
-            <img src="images/obligasi.png" width="50px" alt="obligasi" />
+            <img src="{{asset('images/obligasi.png')}}" width="50px" alt="obligasi" />
             <h6>Obligasi</h6>
           </a>
         </div>
@@ -54,7 +54,7 @@
               <!-- Button trigger modal -->
 
               <button type="button" class="btn" style="background-color: transparent; border: none" data-bs-toggle="modal" data-bs-target="#edit" data-bs-whatever="@mdo">
-                <img src="images/jual.png " width="30px" alt="" />
+                <img src="{{asset('images/jual.png')}} " width="30px" alt="" />
               </button>
 
               <div class="modal fade text-start" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,7 +74,7 @@
                               <!-- Kolom Kanan -->
                               <div class="col-6 mb-3">
                                 <div class="form-group">
-                                  <label for="hargaLot">Nama Aset</label>
+                                  <label for="namaAset">Nama Aset</label>
                                   <input type="text" class="form-control" id="namaAset" required />
                                 </div>
                               </div>
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="modal-footer py-4">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                          
                           <!-- tombol submitnya -->
                           <button type="submit" class="btn btn-warning text-black border-2" style="font-weight: 400">Jual</button>
                         </div>

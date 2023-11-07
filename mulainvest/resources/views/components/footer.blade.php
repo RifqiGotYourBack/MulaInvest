@@ -2,9 +2,10 @@
   <div class="container-fluid" style="background-color: #0198a3">
     <div class="d-flex justify-content-around py-4">
       <div class="col-5 d-flex align-items-center px-5">
-        <div><img src="images/mulainvest.png" alt="" width="80px" /></div>
-        <div class="text-white px-3 mt-3 w-75">
-          <p style="font-size: 13px; text-align: justify">Mulainvesta adalah tugas kelompok yang pembagian tugasnya sudah dilakukan untuk 10 orang yang kerja ga sampe 5, dikira yang sibuk dia aja kali ya</p>
+        <div><img src="images/mulainvest.png" alt="mulainvest" width="80px" /></div>
+        <div class="text-white px-3 mt-3 w-100">
+          <p style="font-size: 12px; text-align: justify">MulaiInvest adalah platform investasi online yang mengutamakan keamanan data pengguna. Dengan pengalaman yang mudah, terutama untuk pemula, platform ini memudahkan akses ke investasi dengan aman dan tanpa kesulitan.
+          </p>
         </div>
       </div>
       <div class="col-7 px-5 d-flex justify-content-end">
@@ -24,7 +25,7 @@
           <h5>Layanan</h5>
 
           <a class="text-white link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#"> Artikel </a>
-          <a class="text-white link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#"> Lainnya </a>
+          <a class="text-white link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ route('faq') }}"> FAQ </a>
         </div>
 
         <div class="d-flex flex-column ms-5">
