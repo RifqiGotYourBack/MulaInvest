@@ -3,24 +3,33 @@
     
 <div class="d-flex flex-column align-items-center" style="height: 1000px; background-color: #cee5e653">
     <div class="container-fluid d-flex justify-content-center align-items-center py-5" style="height: 300px">
-      <div class="d-flex flex-column justify-content-between bg-warning p-4 border border-warning border-3 border-end-0 rounded-start col-3" style="height: 150px">
+      <div class="d-flex flex-column justify-content-evenly bg-warning p-4 border border-warning border-3 border-end-0 rounded-start col-3" style="height: 150px">
+        <div>
+          <h4 class="fw-semibold">Balance Portofolio</h4>
+        </div>
         <div>
           <h4>Rp.<span>{{ number_format($totalBalance, 2) }}</span></h4>
         </div>
       </div>
 
-      <div class="col-6 d-flex justify-content-center align-items-center border border border-warning border-3 border-start-0 rounded-end" style="height: 150px">
-        <div class="col-4 d-flex justify-content-center">
-          <a class="text-center text-black" href="{{ route('investasi') }}">
-            <img src="{{asset('images/investasiku.png')}}" width="50px" alt="investasi" />
-            <h6>Investasi</h6>
-          </a>
+      <div class="col-6 d-flex justify-content-center align-items-center border border-warning border-3 border-start-0 rounded-end" style="height: 150px">
+       
+        <div class="col-4 d-flex flex-column text-center justify-content-center center align-items-center">
+          <div>
+            <h3>40%</h3>
+          </div>
+          <div >
+            <h6 onmouseover="this.style.fontWeight='800';this.style.transition='0.15s'; this.style.color='#0198A3'" onmouseout="this.style.fontWeight='600';this.style.transition='0.15s'; this.style.color='black'">Investasi</h6>
+          </div>
         </div>
-        <div class="col-4 d-flex justify-content-center">
-          <a class="text-center text-black" href="#">
-            <img src="{{asset('images/obligasi.png')}}" width="50px" alt="obligasi" />
-            <h6>Obligasi</h6>
-          </a>
+
+        <div class="col-4 d-flex flex-column text-center justify-content-center center align-items-center">
+          <div>
+            <h3 class="fw-semibold">60%</h3>
+          </div>
+          <div>
+            <h6 onmouseover="this.style.fontWeight='800';this.style.transition='0.15s'; this.style.color='#0198A3'" onmouseout="this.style.fontWeight='600';this.style.transition='0.15s'; this.style.color='black'">Obligasi</h6>
+          </div>
         </div>
       </div>
     </div>
@@ -38,6 +47,7 @@
             <th class="fw-semibold" style="font-size: 15px" scope="col">Kode saham</th>
             <th class="fw-semibold" style="font-size: 15px" scope="col">Nama Aset</th>
             <th class="fw-semibold" style="font-size: 15px" scope="col">Jumlah lembar</th>
+            <th class="fw-semibold" style="font-size: 15px" scope="col">Stok</th>
             <th class="fw-semibold" style="font-size: 15px" scope="col">Harga(beli)</th>
             <th class="fw-semibold" style="font-size: 15px" scope="col">Harga(Live)</th>
             <th class="fw-semibold" style="font-size: 15px" scope="col">Jual</th>
@@ -50,6 +60,7 @@
               <td>{{ $asset->InvestmentID }}</td>
               <td>{{ $asset->InvestmentName }}</td>
               <td>{{ $asset->BuyAmount }}</td>
+              <td>halo</td>
               <td>{{ number_format($asset->BuyPrice, 2) }}</td>
               <td>{{ number_format($asset->LatestPrice, 2) }}</td>
               <td>
@@ -101,10 +112,10 @@
                           </fieldset>
                         </div>
 
-                        <div class="modal-footer py-4">
+                        <div class="modal-footer py-3 ">
                           
                           <!-- tombol submitnya -->
-                          <button type="submit" class="btn btn-warning text-black border-2" style="font-weight: 400">Jual</button>
+                          <button type="submit" class="btn btn-warning text-black border-2" style="font-weight: 400;width: 100px">Jual</button>
                         </div>
                       </form>
                     </div>
