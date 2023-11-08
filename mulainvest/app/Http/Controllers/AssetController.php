@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assets;
 use Illuminate\Support\Facades\DB;
 use App\Models\Investments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -14,24 +15,33 @@ class AssetController extends Controller
     public function buyAsset(Request $request, $InvestmentId)
     {
         DB::enableQueryLog();
-        $investment = Investments::findOrFail($InvestmentId); // Kalo investment gak ketemu, fail-in aja
+        $investment = Investments::findOrFail($InvestmentId); // If the investment is not found, fail
     
-        // Validasi request (Jaga-jaga jika buyAmount > jumlah stock yang ada)
+        // Validate the request (To make sure buyAmount does not exceed available stock)
         $request->validate([
             'BuyAmount' => ['required', 'numeric', 'min:1', 'max:'.$investment->Stock]
         ]);
-    
-        $userID = auth()->user()->UserID;
+        
+        $user = auth()->user();
+        $userID = $user->UserID;
+        $userTable = User::findOrFail($userID);
     
         $latestPrice = $investment->InvestmentPrice;
         $buyAmount = $request->BuyAmount;
+        $totalCost = $latestPrice * $buyAmount;
     
-        // Validasi stock
+        // Check if user has enough balance
+        if ($userTable->Balance < $totalCost) {
+            dd($userTable->Balance);
+            return redirect()->back()->with('error', 'Insufficient balance to purchase this amount of assets.');
+        }
+    
+        // Check stock availability
         if ($investment->Stock < $buyAmount) {
             return redirect()->back()->with('error', 'Insufficient stock for this investment.');
         }
     
-        // Transaksi (Create asset abis itu kurangin stock)
+        // Transaction (Create asset then reduce stock and user balance)
         DB::beginTransaction();
         try {
             $asset = Assets::create([
@@ -44,7 +54,11 @@ class AssetController extends Controller
                 'IsActive' => true
             ]);
     
+            // Decrement investment stock
             $investment->decrement('Stock', $buyAmount);
+    
+            // Decrement user balance
+            $userTable->decrement('Balance', $totalCost);
     
             DB::commit();
             Log::info(DB::getQueryLog());
@@ -57,6 +71,7 @@ class AssetController extends Controller
             return redirect()->back()->with('error', 'An error occurred while purchasing the asset.');
         }
     }
+    
     
 
 
