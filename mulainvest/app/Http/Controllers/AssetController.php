@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assets;
 use Illuminate\Support\Facades\DB;
 use App\Models\Investments;
+use App\Models\TransactionHistories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -44,13 +45,12 @@ class AssetController extends Controller
         // Transaction (Create asset then reduce stock and user balance)
         DB::beginTransaction();
         try {
-            $asset = Assets::create([
+            Assets::create([
                 'AssetID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
                 'UserID' => $userID,
                 'InvestmentID' => $InvestmentId,
                 'BuyAmount' => $buyAmount,
                 'BuyPrice' => $latestPrice,
-                'AcquisitionDate' => now(),
                 'IsActive' => true
             ]);
     
@@ -59,7 +59,17 @@ class AssetController extends Controller
     
             // Decrement user balance
             $userTable->decrement('Balance', $totalCost);
-    
+
+            // Record Transaction
+            TransactionHistories::create([
+                'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
+                'UserID' => $userID, 
+                'TransactionAmount' => $buyAmount, 
+                'TransactionValue' => $totalCost, 
+                'TransactionType'=> 'buy',
+                'TransactionDate' => now()
+            ]);
+            
             DB::commit();
             Log::info(DB::getQueryLog());
     
