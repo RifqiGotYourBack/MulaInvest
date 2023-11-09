@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'Address' => 'User Address',
             'Role' => 'user',
             'IsActive' => true,
+            'IsVerified' => true,
         ]);
 
         User::create([
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'NoTelp' => '1234567890',
             'Address' => 'Admin Address',
             'Role' => 'admin',
+            'IsVerified' => true,
             'IsActive' => true,
         ]);
 
@@ -68,10 +70,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         BankAccounts::create([
+            'BankAccountID' => 'BNK1',
             'UserID' => 'usr12',
-            'BankName' => 'Bank golput', 
-            'BankAccountNumber' => '01923876', 
-            'Address' => 'Jl. Aku pusing dan mual', 
+            'BankName' => 'Bank golput',
+            'BankAccountNumber' => '01923876',
+        ]);
+        BankAccounts::create([
+            'BankAccountID' => 'BNK2',
+            'UserID' => 'usr13',
+            'BankName' => 'Bank Ijo',
+            'BankAccountNumber' => '01923876',
         ]);
     }
 }

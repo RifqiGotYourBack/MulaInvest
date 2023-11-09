@@ -12,13 +12,14 @@
     <!-- kanan -->
     <div class="d-flex flex-column justify-content-center align-items-center  bg-white col-5">
         <div class="d-flex flex-column align-items-center justify-content-center col-10 h-75">
-            <a href="{{ route('berandaTamu') }}" >
+            <a href="{{ route('berandaTamu') }}">
                 <img src="{{asset('images/logoRegist.png')}}" alt="mulainvest" width="110px" />
             </a>
             <div>
                 <div class="py-3">
                     <h5 class="pt-3 fw-semibold text-center">OTP Verifikasi</h5>
-                    <h6 style="font-size: 13px">Kode Telah dikirim ke email <span class="fw-semibold text-warning">rakamin@gmail.com</span></h6>
+                    <h6 style="font-size: 13px">Kode akan dikirim ke email <span
+                            class="fw-semibold text-warning">{{ $email }}</span></h6>
                 </div>
                 @if ($errors->any() || session('error'))
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -42,19 +43,26 @@
                 @endif
 
                 <!-- form normal -->
-                <form class="d-flex flex-column justify-content-center align-items-center py-4" method="post" action="{{ route('register-store') }}">
+                <!-- form normal -->
+                <form class="d-flex flex-column justify-content-center align-items-center py-4" method="post"
+                    action="{{ route('verify.otp.submit') }}">
                     @csrf
                     <div class="mb-3 col-12">
-                        <input type="password" class="form-control form-control-sm" id="otp"
-                            aria-describedby="emailHelp" name="email" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                        <input type="hidden" value="{{ $email }}" name="email_hidden">
+                        <input type="text" class="form-control form-control-sm" id="otp" aria-describedby="emailHelp"
+                            name="otp" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required/>
                     </div>
-
                     <button type="submit" class="btn btn-primary col-8 mt-3 btn-sm" style="">Verifikasi</button>
                 </form>
-                <!-- form normal -->
-                <p class="text-center  pb-3" style="font-size: 14px">Kode Belum Terkirim ? <a href="{{ route('login') }}"
-                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Kirim Ulang
-                    </a></p>
+
+                <!-- form untuk mengirim ulang -->
+                <form class="d-flex flex-column justify-content-center align-items-center" method="post"
+                    action="{{ route('resend.otp') }}">
+                    @csrf
+                    <input type="hidden" value="{{ $email }}" name="email_hidden_resend">
+                    <button type="submit" class="btn btn-primary col-8 mt-3 btn-sm" style="">Minta OTP</button>
+                </form>
+
             </div>
         </div>
     </div>

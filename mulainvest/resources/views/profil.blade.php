@@ -9,7 +9,7 @@
                 <a class="list-group-item list-group-item-action  text-center fw-bold text-light"
                     style="background-color: #0198a3" aria-current="true"> Profil investor </a>
                 <a href="{{ route('profil') }}" class="list-group-item list-group-item-action hoverSidebar"
-                    style="background-color: #cee5e6;" 
+                    style="background-color: #cee5e6;"
                   >Profil</a>
                 <a href="{{ route('bankAkun') }}" class="list-group-item list-group-item-action hoverSidebar"
                     style="background-color: #cee5e6">Bank Account</a>
@@ -67,14 +67,14 @@
                                         <label for="inputNama">No.Handphone</label>
                                         <input type="" class="form-control" id="inputPhone" placeholder="Masukkan nomor"
                                             inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                            name="no_telp" value="{{ old('no_telp', $user->NoTelp) }}" required/>
+                                            name="no_telp" value="{{ old('no_telp', $user->NoTelp) }}"/>
                                     </div>
                                 </div>
                                 <!-- Kolom Kanan (Tanggal Lahir) -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputTanggalLahir">Tanggal Lahir:</label>
-                                        <input type="date" class="form-control" id="inputTanggalLahir" required/>
+                                        <input type="date" class="form-control" name="dob" id="inputTanggalLahir" value="{{ old('no_telp', $user->DateOfBirth) }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -88,10 +88,10 @@
                     </div>
                     <div class="form-group">
                         <label for="inputAlamat">Alamat</label>
-                        <input type="text" class="form-control" id="inputAlamat" placeholder="Jln. xx" name="address" value="{{ old('address', $user->Address) }}" required/>
+                        <input type="text" class="form-control" id="inputAlamat" placeholder="Jln. xx" name="address" value="{{ old('address', $user->Address) }}"/>
                     </div>
                     <div class="d-flex justify-content-end pt-4">
-                        
+
                             <button type="submit" class="btn btn-warning btn-outline-dark mt-5" style="width: 150px" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Profil</button>
                     </div>
                 </form>

@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\OTPController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,11 @@ Route::get('/', function () {
 
 // autentikasi
 
-Route::get('/otp', function () {
-    return view('otp');
-})->name('otp');
+Route::get('/verify-otp', [OTPController::class, 'index'])->name('verify.otp');
+Route::post('/verify-otp', [OTPController::class, 'verifyOtp'])->name('verify.otp.submit');
+Route::post('/resend-otp', [OTPController::class, 'resendOtp'])->name('resend.otp');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');;
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login-store');
 
@@ -63,7 +64,7 @@ Route::group([
     Route::get('/investasi', [InvestmentController::class, 'index'])->name('investasi');
     Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
 
-    
+
     Route::get('/aset', function () {
         return view('aset');
     })->name('aset');

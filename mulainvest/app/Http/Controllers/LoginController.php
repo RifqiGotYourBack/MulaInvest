@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -25,11 +26,11 @@ class LoginController extends Controller
             'password' => ['required', 'min:5', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
         ]);
 
-        // Fetch user pakai Email
+        // Fetch user by Email
         $user = User::where('Email', $request->email)->where('IsActive', 1)->first();
 
-        // Login Logic
-        if ($user && Hash::check($request->password, $user->Password)) {
+        // Check if the user is verified
+        if ($user && $user->IsVerified && Hash::check($request->password, $user->Password)) {
             auth()->login($user);
 
             // Handle role user
@@ -38,11 +39,17 @@ class LoginController extends Controller
             } elseif ($user->Role === 'admin') {
                 return redirect()->route('investasiAdmin');
             }
+        } elseif ($user && !$user->IsVerified) {
+            // If the user is not verified, redirect to the OTP verification page
+            return redirect()->route('verify.otp')->with([
+                'email' => $request->email,
+                'error' => 'Please verify your account using the OTP sent to your email.'
+            ]);
+
         }
 
         // If login details are incorrect
-        return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
-
+        throw ValidationException::withMessages(['email' => 'The provided credentials do not match our records.']);
     }
 
     public function logout()
