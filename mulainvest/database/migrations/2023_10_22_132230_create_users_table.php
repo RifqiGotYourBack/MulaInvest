@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('Password');
             $table->string('NoTelp');
             $table->string('Address');
-            $table->date('DateOfBirth')->nullable(); 
+            $table->date('DateOfBirth')->nullable();
             $table->decimal('Balance', 10, 2)->default(0);
             $table->enum('Role', ['user', 'admin'])->default('user');
             $table->boolean('IsActive');
+            $table->boolean('IsVerified')->default(false);
+            $table->string('OTP')->nullable();
+            $table->timestamp('otp_requested_at')->nullable();
             $table->timestamps();
         });
 

@@ -44,7 +44,7 @@
       </div>
 
       <div class="d-flex flex-column col-4 bg-primary justify-content-center p-5 border border-primary border-3 border-start-0 rounded-end" style="height: 300px">
-        <h4 class="align-items-center fw-bold text-white text-end">Mulainvest menjadi Solusi Investasi</h4>
+        <h4 class="align-items-center fw-bold text-white text-end">Kenapa harus Memilih Mulainvest</h4>
       </div>
     </div>
   </div>

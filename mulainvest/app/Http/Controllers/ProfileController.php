@@ -37,6 +37,7 @@ class ProfileController extends Controller
         $user->Email = $request->email;
         $user->NoTelp = $request->no_telp;
         $user->Address = $request->address;
+        $user->DateOfBirth = $request->dob;
 
         if ($user->save()) {
             // Redirect dengan pesan sukses

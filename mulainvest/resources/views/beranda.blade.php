@@ -70,7 +70,7 @@
               <img src="{{asset('images/pelayanan.png')}}" alt="pelayanan" width="100px" />
             </div>
             <div>
-              <h5 class="card-text ">Keamanan Data Maksimum</h5>
+              <h5 class="card-text ">Konsisten Memberi Layanan Optimal</h5>
             </div>
           </div>
         </div>

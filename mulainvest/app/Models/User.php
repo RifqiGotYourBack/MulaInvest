@@ -19,7 +19,7 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-        'Name', 'Email', 'Password', 'NoTelepon', 'Address', 'Balance', 'Role', 'IsActive'
+        'Name', 'Email', 'Password', 'NoTelepon', 'Address', 'Balance', 'Role', 'IsActive', 'IsVerified'
     ];
 
     // A user has many assets
