@@ -24,6 +24,10 @@ Route::get('/', function () {
 
 // autentikasi
 
+Route::get('/otp', function () {
+    return view('otp');
+})->name('otp');
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');;
 
 Route::post('/login', [LoginController::class, 'login'])->name('login-store');
