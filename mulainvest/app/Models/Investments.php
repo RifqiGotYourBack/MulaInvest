@@ -22,6 +22,6 @@ class Investments extends Model
     // An investment has many assets
     public function assets()
     {
-        return $this->hasMany(Asset::class, 'InvestmentID');
+        return $this->hasMany(Assets::class, 'InvestmentID');
     }
 }

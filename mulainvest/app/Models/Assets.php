@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assets extends Model
 {
+    public $timestamps = false;
+
     use HasFactory;
 
     protected $primaryKey = 'AssetID';
@@ -18,7 +20,7 @@ class Assets extends Model
     ];
 
     protected $fillable = [
-        'AssetID', 'UserID', 'InvestmentID', 'BuyAmount', 'BuyPrice', 'SoldDate', 'IsActive'
+        'AssetID', 'UserID', 'InvestmentID', 'AssetAmount', 'BuyPrice', 'IsActive'
     ];
 
     // An asset belongs to a user
@@ -30,6 +32,6 @@ class Assets extends Model
     // An asset belongs to an investment
     public function investment()
     {
-        return $this->belongsTo(Investment::class, 'InvestmentID');
+        return $this->belongsTo(Investments::class, 'InvestmentID');
     }
 }

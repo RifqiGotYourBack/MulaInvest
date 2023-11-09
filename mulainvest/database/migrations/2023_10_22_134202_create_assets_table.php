@@ -18,10 +18,8 @@ return new class extends Migration
             $table->string('InvestmentID');
             $table->foreign('InvestmentID')->references('InvestmentID')->on('investments')->onDelete('cascade');
             $table->decimal('BuyPrice', 10, 2);
-            $table->integer('BuyAmount');
-            $table->timestamp('SoldDate')->nullable();
+            $table->integer('AssetAmount');
             $table->boolean('IsActive');
-            $table->timestamps();
         });
 
     }

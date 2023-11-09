@@ -15,7 +15,8 @@ class AssetController extends Controller
 {
     public function buyAsset(Request $request, $InvestmentId)
     {
-        DB::enableQueryLog();
+        dd($request->all());
+        DB::enableQueryLog(); //Log doang ini mah
         $investment = Investments::findOrFail($InvestmentId); // If the investment is not found, fail
     
         // Validate the request (To make sure buyAmount does not exceed available stock)
@@ -45,22 +46,33 @@ class AssetController extends Controller
         // Transaction (Create asset then reduce stock and user balance)
         DB::beginTransaction();
         try {
+        // Check if the user already has this specific investment
+        $existingAsset = Assets::where('UserID', $userID)
+                                ->where('InvestmentID', $InvestmentId)
+                                ->where('IsActive', true) // Assuming you want to update only active assets
+                                ->first();
+
+        if ($existingAsset) {
+            // User already has this investment, so just update the amount
+            $existingAsset->increment('AssetAmount', $buyAmount);
+        } else {
+            $AssetID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+            // User doesn't have this investment, create a new asset
             Assets::create([
-                'AssetID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
+                'AssetID' => $AssetID,
                 'UserID' => $userID,
                 'InvestmentID' => $InvestmentId,
-                'BuyAmount' => $buyAmount,
+                'AssetAmount' => $buyAmount,
                 'BuyPrice' => $latestPrice,
+                'AcquisitionDate' => now(),
                 'IsActive' => true
             ]);
+        }
     
-            // Decrement investment stock
             $investment->decrement('Stock', $buyAmount);
     
-            // Decrement user balance
             $userTable->decrement('Balance', $totalCost);
 
-            // Record Transaction
             TransactionHistories::create([
                 'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
                 'UserID' => $userID, 
@@ -76,28 +88,35 @@ class AssetController extends Controller
             return redirect()->back()->with('success', 'Asset purchased successfully.');
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error($e->getMessage());
     
             return redirect()->back()->with('error', 'An error occurred while purchasing the asset.');
         }
     }
-    
-    
 
+
+    public function sellAsset(Request $request, $assetId)
+    {
+        dd($request->assetId);
+        return redirect()->back()->with('success', 'Asset sold successfully.');
+    }
+    
 
     public function index(Request $request)
     {
         $userID = auth()->user()->UserID;
 
         $assets = Assets::where('UserID', $userID)
-            ->join('investments', 'assets.InvestmentID', '=', 'investments.InvestmentID')
-            ->select('assets.*', 'investments.InvestmentName', 'investments.InvestmentPrice as LatestPrice')
-            ->get();
-  
-            $totalBalance = $assets->sum(function ($asset) {
-                return $asset->BuyAmount * $asset->LatestPrice;
-            });
-
-            return view('aset', ['assets' => $assets, 'totalBalance' => $totalBalance]);
+                        ->where('IsActive', 1) 
+                        ->join('investments', 'assets.InvestmentID', '=', 'investments.InvestmentID')
+                        ->select('assets.*', 'investments.InvestmentName', 'investments.InvestmentPrice as LatestPrice')
+                        ->get();
+    
+        // Total balance 
+        $totalBalance = $assets->sum(function ($asset) {
+            return $asset->AssetAmount * $asset->LatestPrice;
+        });
+    
+        return view('aset', ['assets' => $assets, 'totalBalance' => $totalBalance]);
     }
+    
 }
