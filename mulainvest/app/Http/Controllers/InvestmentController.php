@@ -8,18 +8,46 @@ use App\Models\Investments;
 class InvestmentController extends Controller
 {
     // Get investments
-    public function index()
+    public function index(Request $request)
     {
-        $investments = Investments::paginate(20);
+        $query = Investments::query();
+    
+        if ($request->has('search') && $request->search != '') {
+            $query->where('InvestmentName', 'like', '%' . $request->search . '%')
+                  ->orWhere('InvestmentType', 'like', '%' . $request->search . '%');
+        }
+        $investments = $query->paginate(15);
+    
         return view('investasi', [
             'investments' => $investments,
             'title' => 'Investasi'
         ]);
     }
+    
+    
 
     public function indexAdmin()
     {
-        $investments = Investments::paginate(20);
+        $investments = Investments::paginate(15);
+        return view('investasiAdmin', [
+            'investments' => $investments
+        ]);
+    }
+
+    public function pasarUangAdmin()
+    {
+        $investments = Investments::where('InvestmentType', 'Pasar Uang')->paginate(15);
+    
+        return view('investasiAdmin', [
+            'investments' => $investments
+        ]);
+    }
+    
+
+    public function obligasiAdmin()
+    {
+        $investments = Investments::where('InvestmentType', 'Obligasi')->paginate(15);
+
         return view('investasiAdmin', [
             'investments' => $investments
         ]);
