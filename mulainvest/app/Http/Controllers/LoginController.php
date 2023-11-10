@@ -26,10 +26,8 @@ class LoginController extends Controller
             'password' => ['required', 'min:5', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
         ]);
 
-        // Fetch user by Email
         $user = User::where('Email', $request->email)->where('IsActive', 1)->first();
 
-        // Check if the user is verified
         if ($user && $user->IsVerified && Hash::check($request->password, $user->Password)) {
             auth()->login($user);
 
@@ -40,7 +38,6 @@ class LoginController extends Controller
                 return redirect()->route('investasiAdmin');
             }
         } elseif ($user && !$user->IsVerified) {
-            // If the user is not verified, redirect to the OTP verification page
             return redirect()->route('verify.otp')->with([
                 'email' => $request->email,
                 'error' => 'Please verify your account using the OTP sent to your email.'

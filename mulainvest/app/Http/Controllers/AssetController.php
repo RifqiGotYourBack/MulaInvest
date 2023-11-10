@@ -16,11 +16,9 @@ class AssetController extends Controller
 {
     public function buyAsset(Request $request, $InvestmentId)
     {
-        // dd($request->all());
-        DB::enableQueryLog(); //Log doang ini mah
-        $investment = Investments::findOrFail($InvestmentId); // If the investment is not found, fail
+        $investment = Investments::findOrFail($InvestmentId);
     
-        // Validate the request (To make sure buyAmount does not exceed available stock)
+        // Validasiequest
         $request->validate([
             'BuyAmount' => ['required', 'numeric', 'min:1', 'max:'.$investment->Stock]
         ]);
@@ -33,32 +31,31 @@ class AssetController extends Controller
         $buyAmount = $request->BuyAmount;
         $totalCost = $latestPrice * $buyAmount;
     
-        // Check if user has enough balance
+        // Cek saldo
         if ($userTable->Balance < $totalCost) {
             dd($userTable->Balance);
             return redirect()->back()->with('error', 'Insufficient balance to purchase this amount of assets.');
         }
     
-        // Check stock availability
+        // Cek stock 
         if ($investment->Stock < $buyAmount) {
             return redirect()->back()->with('error', 'Insufficient stock for this investment.');
         }
     
-        // Transaction (Create asset then reduce stock and user balance)
+        // Transaction (catat asset dan update saldo user)
         DB::beginTransaction();
         try {
-        // Check if the user already has this specific investment
         $existingAsset = Assets::where('UserID', $userID)
                                 ->where('InvestmentID', $InvestmentId)
-                                ->where('IsActive', true) // Assuming you want to update only active assets
+                                ->where('IsActive', true) 
                                 ->first();
 
         if ($existingAsset) {
-            // User already has this investment, so just update the amount
+            // update jika user sudah punya aset terkait
             $existingAsset->increment('AssetAmount', $buyAmount);
         } else {
             $AssetID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
-            // User doesn't have this investment, create a new asset
+            // Buat baru jika blm ada aset terkait
             Assets::create([
                 'AssetID' => $AssetID,
                 'UserID' => $userID,
@@ -79,25 +76,23 @@ class AssetController extends Controller
                 'UserID' => $userID, 
                 'TransactionAmount' => $buyAmount, 
                 'TransactionValue' => $totalCost, 
-                'TransactionType'=> 'buy',
+                'TransactionType'=> 'Beli',
                 'TransactionDate' => now()
             ]);
             
             DB::commit();
-            Log::info(DB::getQueryLog());
     
-            return redirect()->back()->with('success', 'Asset purchased successfully.');
+            return redirect()->back()->with('success', 'Pembelian Aset Berhasil.');
         } catch (\Exception $e) {
             DB::rollback();
     
-            return redirect()->back()->with('error', 'An error occurred while purchasing the asset.');
+            return redirect()->back()->with('error', 'Error Ketika Membeli Aset.');
         }
     }
 
 
     public function sellAsset(Request $request, $AssetID)
     {
-        // Validate the request
         $validatedData = $request->validate([
             'SellAmount' => 'required|numeric|min:1',
         ]);
@@ -106,27 +101,25 @@ class AssetController extends Controller
         
         DB::beginTransaction();
         try {
-            // Retrieve the asset
-            $asset = Assets::with('investments') // Corrected to 'investment' - the relationship name as per your model
+            $asset = Assets::with('investments')
                      ->where('AssetID', $AssetID)
                      ->where('UserID', auth()->user()->UserID)
                      ->where('IsActive', true)
                      ->firstOrFail();
     
-            // Check if the user has enough of the asset to sell
+            // validasi jumlah aset
             if ($sellAmount > $asset->AssetAmount) {
-                return redirect()->back()->with('error', 'You do not have enough of this asset to sell the requested amount.');
+                return redirect()->back()->with('error', 'Permintaan melebihi aset yang dimiliki.');
             }
     
-            // Calculate the total value of the sale
+            // Total penjualan
             $currentMarketPrice = $asset->investments->InvestmentPrice;
             $totalSaleValue = $sellAmount * $currentMarketPrice;
     
-            // Update user's balance
+            // Update saldo
             $user = User::findOrFail(auth()->user()->UserID);
             $user->increment('Balance', $totalSaleValue);
     
-            // Record the sale in the SoldAssets table
             SoldAssets::create([
                 'SoldAssetID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
                 'AssetID' => $AssetID,
@@ -137,7 +130,7 @@ class AssetController extends Controller
                 'SellDate' => now(),
             ]);
     
-            // Decrement the asset amount or mark as inactive if selling all
+            // Pengurangan aset
             if ($sellAmount == $asset->AssetAmount) {
                 $asset->update([
                     'AssetAmount' => 0,
@@ -147,21 +140,21 @@ class AssetController extends Controller
                 $asset->decrement('AssetAmount', $sellAmount);
             }
     
-            // Record the sale transaction in TransactionHistories
+            // Catat riwayat
             TransactionHistories::create([
                 'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
                 'UserID' => $user->UserID,
                 'TransactionAmount' => $sellAmount,
                 'TransactionValue' => $totalSaleValue,
-                'TransactionType' => 'sell',
+                'TransactionType' => 'Jual',
                 'TransactionDate' => now(),
             ]);
             
             DB::commit();
-            return redirect()->back()->with('success', 'Asset sold successfully.');
+            return redirect()->back()->with('success', 'Penjualan Aset Berhasil.');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', 'An error occurred while selling the asset: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error Ketika Menjual Aset: ' . $e->getMessage());
         }
     }
     
@@ -177,7 +170,7 @@ class AssetController extends Controller
                         ->select('assets.*', 'investments.InvestmentName', 'investments.InvestmentPrice as LatestPrice')
                         ->get();
     
-        // Total balance 
+        // Total saldo 
         $totalBalance = $assets->sum(function ($asset) {
             return $asset->AssetAmount * $asset->LatestPrice;
         });

@@ -40,9 +40,9 @@ class RegisterController extends Controller
         $user->Address = '';
         $user->Role = 'user';
         $user->IsActive = 1;
-        $user->IsVerified = false; // Set IsVerified ke false
-        $user->OTP = $otp; // Simpan OTP
-        $user->otp_requested_at = now(); // Simpan waktu permintaan OTP
+        $user->IsVerified = false; 
+        $user->OTP = $otp; 
+        $user->otp_requested_at = now(); 
 
         $bankAccount = new BankAccounts;
         $bankAccount->BankAccountID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
