@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assets;
+use App\Models\SoldAssets;
 use Illuminate\Support\Facades\DB;
 use App\Models\Investments;
 use App\Models\TransactionHistories;
@@ -15,7 +16,7 @@ class AssetController extends Controller
 {
     public function buyAsset(Request $request, $InvestmentId)
     {
-        dd($request->all());
+        // dd($request->all());
         DB::enableQueryLog(); //Log doang ini mah
         $investment = Investments::findOrFail($InvestmentId); // If the investment is not found, fail
     
@@ -94,11 +95,76 @@ class AssetController extends Controller
     }
 
 
-    public function sellAsset(Request $request, $assetId)
+    public function sellAsset(Request $request, $AssetID)
     {
-        dd($request->assetId);
-        return redirect()->back()->with('success', 'Asset sold successfully.');
+        // Validate the request
+        $validatedData = $request->validate([
+            'SellAmount' => 'required|numeric|min:1',
+        ]);
+    
+        $sellAmount = $validatedData['SellAmount'];
+        
+        DB::beginTransaction();
+        try {
+            // Retrieve the asset
+            $asset = Assets::with('investments') // Corrected to 'investment' - the relationship name as per your model
+                     ->where('AssetID', $AssetID)
+                     ->where('UserID', auth()->user()->UserID)
+                     ->where('IsActive', true)
+                     ->firstOrFail();
+    
+            // Check if the user has enough of the asset to sell
+            if ($sellAmount > $asset->AssetAmount) {
+                return redirect()->back()->with('error', 'You do not have enough of this asset to sell the requested amount.');
+            }
+    
+            // Calculate the total value of the sale
+            $currentMarketPrice = $asset->investments->InvestmentPrice;
+            $totalSaleValue = $sellAmount * $currentMarketPrice;
+    
+            // Update user's balance
+            $user = User::findOrFail(auth()->user()->UserID);
+            $user->increment('Balance', $totalSaleValue);
+    
+            // Record the sale in the SoldAssets table
+            SoldAssets::create([
+                'SoldAssetID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
+                'AssetID' => $AssetID,
+                'InvestmentID'=>$asset->InvestmentID,
+                'UserID' => $user->UserID,
+                'SellAmount' => $sellAmount,
+                'SellPrice' => $currentMarketPrice,
+                'SellDate' => now(),
+            ]);
+    
+            // Decrement the asset amount or mark as inactive if selling all
+            if ($sellAmount == $asset->AssetAmount) {
+                $asset->update([
+                    'AssetAmount' => 0,
+                    'IsActive' => false
+                ]);
+            } else {
+                $asset->decrement('AssetAmount', $sellAmount);
+            }
+    
+            // Record the sale transaction in TransactionHistories
+            TransactionHistories::create([
+                'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
+                'UserID' => $user->UserID,
+                'TransactionAmount' => $sellAmount,
+                'TransactionValue' => $totalSaleValue,
+                'TransactionType' => 'sell',
+                'TransactionDate' => now(),
+            ]);
+            
+            DB::commit();
+            return redirect()->back()->with('success', 'Asset sold successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'An error occurred while selling the asset: ' . $e->getMessage());
+        }
     }
+    
     
 
     public function index(Request $request)
