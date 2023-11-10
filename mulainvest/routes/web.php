@@ -9,6 +9,7 @@ use App\Http\Controllers\SoldAssetController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\TopUpController;
+use App\Http\Controllers\TransactionHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,8 @@ Route::group([
     Route::post('sellAsset/{AssetID}', [AssetController::class, 'sellAsset'])->name('sellAsset');
 
     Route::get('/aset-terjual', [SoldAssetController::class, 'index'])->name('aset.terjual');
-
+    
+    Route::get('/riwayat-transaksi', [TransactionHistoryController::class, 'index'])->name('riwayat.transaksi');
 
     Route::get('/profile', [ProfileController::class, 'showEditProfileForm'])->name('profil');
 
