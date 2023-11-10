@@ -66,7 +66,6 @@ Route::group([
 
     Route::get('/investasi', [InvestmentController::class, 'index'])->name('investasi');
     
-    
     Route::get('/aset', [AssetController::class, 'index'])->name('aset');
     Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
     Route::post('sellAsset/{AssetID}', [AssetController::class, 'sellAsset'])->name('sellAsset');
@@ -101,24 +100,12 @@ Route::group([
         'middleware' => 'admin',
     ], function () {
         Route::get('/invests', [InvestmentController::class, 'indexAdmin'])->name('investasiAdmin');
+        Route::get('/pasarUang', [InvestmentController::class, 'pasarUangAdmin'])->name('pasarUang');
+        Route::get('/obligasi', [InvestmentController::class, 'obligasiAdmin'])->name('obligasi');
+
         Route::post('/store-investment', [InvestmentController::class, 'store'])->name('storeInvestment');
         Route::delete('/delete-investment/{id}', [InvestmentController::class, 'destroy'])->name('deleteInvestment');
         Route::put('/investment/update/{id}', [InvestmentController::class, 'update'])->name('updateInvestment');
-
-
-
-
-        Route::get('/admin', function () {
-            return view('admin');
-        })->name('admin');
-
-        Route::get('/pasarUang', function () {
-            return view('pasarUang');
-        })->name('pasarUang');
-
-        Route::get('/obligasi', function () {
-            return view('obligasi');
-        })->name('obligasi');
     });
 });
 
