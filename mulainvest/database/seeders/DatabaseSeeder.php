@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'NoTelp' => '9876543210',
             'Address' => 'User Address',
             'Role' => 'user',
+            'Balance' => 900000,
             'IsActive' => true,
             'IsVerified' => true,
         ]);

@@ -7,12 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionHistories extends Model
 {
+    public $timestamps = false;
+
     use HasFactory;
 
     protected $primaryKey = 'TransactionID';
 
+    protected $casts = [
+        'UserID' => 'string',
+    ];
+
     protected $fillable = [
-        'UserID', 'OrderAmount', 'TransactionValue', 'TransactionDate'
+        'TransactionID','UserID', 'TransactionAmount', 'TransactionValue','TransactionType', 'TransactionDate'
     ];
 
     // A transaction history entry belongs to a user

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign('InvestmentID')->references('InvestmentID')->on('investments')->onDelete('cascade');
             $table->decimal('BuyPrice', 10, 2);
             $table->integer('BuyAmount');
-            $table->timestamp('AcquisitionDate');
             $table->timestamp('SoldDate')->nullable();
             $table->boolean('IsActive');
             $table->timestamps();

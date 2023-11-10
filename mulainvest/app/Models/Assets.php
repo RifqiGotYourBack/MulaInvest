@@ -18,7 +18,7 @@ class Assets extends Model
     ];
 
     protected $fillable = [
-        'AssetID', 'UserID', 'InvestmentID', 'BuyAmount', 'BuyPrice', 'AcquisitionDate', 'SoldDate', 'IsActive'
+        'AssetID', 'UserID', 'InvestmentID', 'BuyAmount', 'BuyPrice', 'SoldDate', 'IsActive'
     ];
 
     // An asset belongs to a user

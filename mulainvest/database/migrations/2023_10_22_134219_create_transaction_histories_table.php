@@ -15,7 +15,8 @@ return new class extends Migration
             $table->string('TransactionID');
             $table->string('UserID');
             $table->foreign('UserID')->references('UserID')->on('users')->onDelete('cascade');
-            $table->integer('OrderAmount');
+            $table->integer('TransactionAmount');
+            $table->string('TransactionType');
             $table->decimal('TransactionValue', 10, 2);
             $table->timestamp('TransactionDate');
         });
