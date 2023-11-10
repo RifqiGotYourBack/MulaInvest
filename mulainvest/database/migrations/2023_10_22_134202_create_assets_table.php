@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('BuyPrice', 10, 2);
             $table->integer('AssetAmount');
             $table->boolean('IsActive');
+            $table->timestamp('AcquisitionDate');
         });
 
     }

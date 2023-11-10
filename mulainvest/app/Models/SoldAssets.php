@@ -25,6 +25,7 @@ class SoldAssets extends Model
     ];
 
     protected $fillable = [
+        'SoldAssetID',
         'AssetID',
         'InvestmentID',
         'UserID',
@@ -33,18 +34,28 @@ class SoldAssets extends Model
         'SaleDate',
     ];
 
-    public function asset()
+    public function assets()
     {
-        return $this->belongsTo(Asset::class, 'AssetID', 'AssetID');
+        return $this->belongsTo(Assets::class, 'AssetID', 'AssetID');
     }
 
-    public function investment()
+    public function investments()
     {
-        return $this->belongsTo(Investment::class, 'InvestmentID', 'InvestmentID');
+        return $this->belongsTo(Investments::class, 'InvestmentID', 'InvestmentID');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'UserID', 'UserID');
+    }
+
+    public function getMarginAttribute()
+    {
+        if ($this->BuyPrice && $this->SellPrice) {
+            $difference = $this->SellPrice - $this->BuyPrice;
+            $margin = ($difference / $this->BuyPrice) * 100;
+            return round($margin, 2);
+        }
+        return 0;
     }
 }

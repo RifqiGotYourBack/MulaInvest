@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Investments;
 
 class Assets extends Model
 {
@@ -20,7 +21,7 @@ class Assets extends Model
     ];
 
     protected $fillable = [
-        'AssetID', 'UserID', 'InvestmentID', 'AssetAmount', 'BuyPrice', 'IsActive'
+        'AssetID', 'UserID', 'InvestmentID', 'AssetAmount', 'BuyPrice', 'IsActive', 'AcquisitionDate'
     ];
 
     // An asset belongs to a user
@@ -30,8 +31,15 @@ class Assets extends Model
     }
 
     // An asset belongs to an investment
-    public function investment()
+    public function investments()
     {
         return $this->belongsTo(Investments::class, 'InvestmentID');
     }
+
+    public function soldAssets()
+    {
+        return $this->hasMany(SoldAssets::class, 'SoldAssetID');
+    }
+
+
 }

@@ -23,5 +23,10 @@ class Investments extends Model
     public function assets()
     {
         return $this->hasMany(Assets::class, 'InvestmentID');
+
+    }
+    public function soldAssets()
+    {
+        return $this->hasMany(SoldAssets::class, 'SoldAssetID');
     }
 }

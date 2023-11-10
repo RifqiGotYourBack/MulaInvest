@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->hasMany(Asset::class, 'UserID');
     }
 
+    public function soldAssets()
+    {
+        return $this->hasMany(SoldAssets::class, 'SoldAssetID');
+    }
+
     // A user has many transaction histories
     public function transactionHistories()
     {
