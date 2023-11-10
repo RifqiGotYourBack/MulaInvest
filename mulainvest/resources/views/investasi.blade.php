@@ -4,8 +4,9 @@
 <div class="d-flex flex-column align-items-center" style="background-color: #cee5e653; min-height: 500px">
     <div class="col-7 py-5">
         <div class="container-fluid">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <form class="d-flex" role="search" action="{{ route('investasi') }}" method="GET">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search"
+                    value="{{ request('search') }}" />
                 <button class="btn btn-warning d-flex justify-content-center align-items-center" type="submit">
                     <div class="col-8 px-2">Cari</div>
                     <div class="col-4">
@@ -45,7 +46,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Kode saham</th>
                     <th scope="col">Nama Perusahaan</th>
-                    <th scope="col">Tipe</th>
+                    <th scope="col">Jenis Aset</th>
                     <th scope="col">Tersedia</th>
                     <th scope="col">Harga/Lot</th>
                     <th scope="col">Min.Order</th>
@@ -78,7 +79,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content" style="background-color: #cee5e6">
                                         <div class="modal-header text-white" style="background-color: #0198a3">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Beli Saham</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Beli Aset</h1>
                                             <button type="button" class="btn-close me-2" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -89,7 +90,7 @@
                                                 @csrf
 
                                                 <div class="mb-3">
-                                                    <label for="BuyAmount" class="col-form-label">Jumlah Saham yang
+                                                    <label for="BuyAmount" class="col-form-label">Jumlah Aset yang
                                                         Dibeli</label>
                                                     <input type="number" class="form-control" id="BuyAmount"
                                                         name="BuyAmount" />
@@ -100,15 +101,13 @@
                                                         data-bs-dismiss="modal">Close</button>
                                                     <!-- tombol submitnya -->
                                                     <button type="submit" class="btn btn-warning text-black border-2"
-                                                        style="font-weight: 400">Beli Saham</button>
+                                                        style="font-weight: 400">Beli Aset</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </td>
                     </tr>
                 @endforeach

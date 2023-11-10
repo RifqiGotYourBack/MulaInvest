@@ -50,7 +50,7 @@
 
     @if ($soldAssets->isEmpty())
         <div class="alert alert-warning" role="alert">
-            You have no sold assets.
+            Kamu Belum Memiliki Aset yang Terjual.
         </div>
     @else
         <div class="py-5">
@@ -58,7 +58,8 @@
                 <thead class="table-warning">
                     <tr>
                         <th class="fw-semibold" style="font-size: 15px" scope="col">Kode saham</th>
-                        <th class="fw-semibold" style="font-size: 15px" scope="col">Nama Aset</th>
+                        <th class="fw-semibold" style="font-size: 15px" scope="col">Nama Perusahaan</th>
+                        <th class="fw-semibold" style="font-size: 15px" scope="col">Jenis Aset</th>
                         <th class="fw-semibold" style="font-size: 15px" scope="col">Jumlah lembar</th>
                         <th class="fw-semibold" style="font-size: 15px" scope="col">Harga(Beli)</th>
                         <th class="fw-semibold" style="font-size: 15px" scope="col">Harga(Jual)</th>
@@ -70,6 +71,7 @@
                         <tr>
                             <td>{{ $soldAsset->investments->InvestmentID }}</td>
                             <td>{{ $soldAsset->investments->InvestmentName }}</td>
+                            <td>{{ $soldAsset->investments->InvestmentType }}</td>
                             <td>{{ $soldAsset->SellAmount }}</td>
                             <td>{{ number_format($soldAsset->assets->BuyPrice, 2) }}</td>
                             <td>{{ number_format($soldAsset->SellPrice, 2) }}</td>
