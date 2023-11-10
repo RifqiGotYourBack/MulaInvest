@@ -167,15 +167,38 @@ class AssetController extends Controller
         $assets = Assets::where('UserID', $userID)
                         ->where('IsActive', 1) 
                         ->join('investments', 'assets.InvestmentID', '=', 'investments.InvestmentID')
-                        ->select('assets.*', 'investments.InvestmentName', 'investments.InvestmentPrice as LatestPrice')
-                        ->get();
+                        ->select('assets.*', 'investments.InvestmentName','investments.InvestmentType', 'investments.InvestmentPrice as LatestPrice')
+                        ->paginate(15);
     
         // Total saldo 
         $totalBalance = $assets->sum(function ($asset) {
             return $asset->AssetAmount * $asset->LatestPrice;
         });
     
-        return view('aset', ['assets' => $assets, 'totalBalance' => $totalBalance]);
+        // Jumlah aset Pasar Uang
+        $pasarUangTotal = Assets::where('UserID', $userID)
+                                ->whereHas('investments', function ($query) {
+                                    $query->where('InvestmentType', 'Pasar Uang');
+                                })
+                                ->sum('AssetAmount');
+
+        // Jumlah aset Pasar Uang Obligasi
+        $obligasiTotal = Assets::where('UserID', $userID)
+                                ->whereHas('investments', function ($query) {
+                                    $query->where('InvestmentType', 'Obligasi');
+                                })
+                                ->sum('AssetAmount'); 
+
+        // Hitung presentase
+        $pasarUangPercentage = $totalBalance > 0 ? ($pasarUangTotal / $totalBalance) * 100 : 0;
+        $obligasiPercentage = $totalBalance > 0 ? ($obligasiTotal / $totalBalance) * 100 : 0;
+
+        return view('aset', [
+            'assets' => $assets,
+            'totalBalance' => $totalBalance,
+            'pasarUangPercentage' => $pasarUangPercentage,
+            'obligasiPercentage' => $obligasiPercentage
+        ]);
     }
     
 }
