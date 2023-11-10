@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\SoldAssetController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\OTPController;
 
@@ -62,14 +63,13 @@ Route::group([
     })->name('tentang');
 
     Route::get('/investasi', [InvestmentController::class, 'index'])->name('investasi');
-    Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
-
-
-    Route::get('/aset', function () {
-        return view('aset');
-    })->name('aset');
-
+    
+    
     Route::get('/aset', [AssetController::class, 'index'])->name('aset');
+    Route::post('buyAsset/{id}', [AssetController::class, 'buyAsset'])->name('buyAsset');
+    Route::post('sellAsset/{AssetID}', [AssetController::class, 'sellAsset'])->name('sellAsset');
+
+    Route::get('/aset-terjual', [SoldAssetController::class, 'index'])->name('aset.terjual');
 
 
     Route::get('/profile', [ProfileController::class, 'showEditProfileForm'])->name('profil');
