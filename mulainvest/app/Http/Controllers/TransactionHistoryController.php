@@ -11,7 +11,7 @@ class TransactionHistoryController extends Controller
         $userId = auth()->user()->UserID;
         $transactionHistories = TransactionHistories::where('UserID', $userId)
                                                     ->orderBy('TransactionDate', 'desc')
-                                                    ->paginate(10);
+                                                    ->paginate(15);
 
         return view('riwayatTransaksi', compact('transactionHistories'));
     }
