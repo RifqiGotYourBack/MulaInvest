@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('TransactionAmount');
             $table->string('TransactionType');
             $table->decimal('TransactionValue', 10, 2);
-            $table->timestamp('TransactionDate');
+            $table->datetime('TransactionDate');
         });
         
     }

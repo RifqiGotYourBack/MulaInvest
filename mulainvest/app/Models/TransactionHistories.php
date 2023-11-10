@@ -15,6 +15,7 @@ class TransactionHistories extends Model
 
     protected $casts = [
         'UserID' => 'string',
+        'TransactionDate' => 'datetime',
     ];
 
     protected $fillable = [
