@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class BankAccounts extends Model
 {
     use HasFactory;
-
+    
     protected $primaryKey = 'BankAccountID';
 
+    
+    protected $casts = [
+        'BankAccountID' => 'string',
+    ];
+
     protected $fillable = [
-        'UserID', 'BankName', 'BankAccountNumber'
+        'BankAccountID','UserID', 'BankName', 'BankAccountNumber'
     ];
 }

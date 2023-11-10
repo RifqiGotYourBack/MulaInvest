@@ -8,6 +8,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\SoldAssetController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\OTPController;
+use App\Http\Controllers\TopUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,7 @@ Route::group([
     Route::get('/topUp', function () {
         return view('topUp');
     })->name('topUp');
+    Route::post('/topup-commit', [TopUpController::class, 'topUp'])->name('topup-commit');
 
     Route::get('/faq', function () {
         return view('faq');

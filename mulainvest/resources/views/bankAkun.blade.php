@@ -64,14 +64,14 @@
                     <div class="form-group mb-3">
                         <label for="inputNamaBank">Nama Bank</label>
                         <input type="text" class="form-control" id="inputNamaBank" placeholder="Bank Rakamin"
-                            name="bank_name" value="{{ old('bank_name', $bankAccount->BankName) }}" />
+                            name="bank_name" value="{{ old('bank_name', optional($bankAccount)->BankName) }}" />
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputRekening">No.Rekening</label>
                         <input type="tel" class="form-control" id="inputRekening" inputmode="numeric"
                             placeholder="001122394" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             name="bank_account_number"
-                            value="{{ old('bank_account_number', $bankAccount->BankAccountNumber) }}" />
+                            value="{{ old('bank_account_number', optional($bankAccount)->BankAccountNumber) }}" />
                     </div>
                     <div class="d-flex justify-content-end ">
                         <button type="submit" class="btn btn-warning btn-outline-dark mt-2" style="width: 150px"
