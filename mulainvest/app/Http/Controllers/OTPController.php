@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpMail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Mail\Events\MessageSent;
+use Swift_TransportException;
 
 class OTPController extends Controller
 {
@@ -70,12 +75,31 @@ class OTPController extends Controller
 
         $user->save();
 
-        // Kirim OTP baru via email
-        Mail::to($user->Email)->send(new OtpMail($otp));
+        // Listen for MessageSending and MessageSent events
+    Event::listen(MessageSending::class, function ($event) use ($user) {
+        Log::info('Attempting to send email to: ' . $user->Email);
+    });
 
-        return redirect()->route('verify.otp')->with([
-            'status' => 'New OTP sent to your email. Please check your inbox.',
-            'email' => $request->email_hidden_resend, // Menyimpan email dalam sesi flash
-        ]);
+    Event::listen(MessageSent::class, function ($event) use ($user) {
+        Log::info('Email sent successfully to: ' . $user->Email);
+        // Handle success if needed
+    });
+
+    try {
+        // Send the new OTP via email using the MyTestEmail Mailable class
+        Mail::to($user->Email)->send(new OtpMail($otp));
+    } catch (Swift_TransportException $e) {
+        Log::error('Failed to send email to: ' . $user->Email . ' Error: ' . $e->getMessage());
+        // Handle failure here, e.g., update a status, send a notification, etc.
+    }
+
+    // Remove the event listeners
+    Event::forget(MessageSending::class);
+    Event::forget(MessageSent::class);
+
+    return redirect()->route('verify.otp')->with([
+        'status' => 'New OTP sent to your email. Please check your inbox.',
+        'email' => $request->email_hidden_resend,
+    ]);
     }
 }
