@@ -51,6 +51,12 @@
               >
             </li>
             <li>
+              <a class="dropdown-item" href="{{ route('riwayat.transaksi') }}">
+                <img class="me-2" class="me-2" src="{{ asset('images/riwayat.png') }}" alt="gantipass" width="23px" />
+                Riwayat Transaksi</a
+              >
+            </li>
+            <li>
               <a class="dropdown-item" href="{{ route('faq') }}">
                 <img class="me-2" src="{{ asset('images/faq.png') }}" alt="FAQ" width="23px" />
                 FAQ</a
