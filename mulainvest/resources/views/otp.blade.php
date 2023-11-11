@@ -60,7 +60,7 @@
                     action="{{ route('resend.otp') }}">
                     @csrf
                     <input type="hidden" value="{{ $email }}" name="email_hidden_resend">
-                    <button type="submit" class="btn btn-primary col-8 mt-3 btn-sm" style="">Minta OTP</button>
+                    <button type="submit" class="btn btn-light col-8 mt-3 btn-sm fw-semibold text-primary">Minta OTP</button>
                 </form>
 
             </div>
