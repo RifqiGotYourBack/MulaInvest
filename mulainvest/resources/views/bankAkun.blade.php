@@ -22,8 +22,8 @@
             <div class="row m-1 rounded">
                 <div class="col-6 align-items-center text-center rounded-start text-white"
                     style="background-color: #0198a3">
-                    <h5 class="m-3">Balance</h5>
-                    <p>Rp. <span>10000000</span></p>
+                    <h5 class="m-3">Saldo</h5>
+                    <p>Rp. <span>{{ number_format($user->Balance, 2) }}</span></p>
                 </div>
                 <div class="col-6 d-flex justify-content-evenly align-items-center text-white rounded-end"
                     style="background-color: #0198a3">

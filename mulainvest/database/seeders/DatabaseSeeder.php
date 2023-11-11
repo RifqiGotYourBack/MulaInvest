@@ -49,9 +49,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Investments::create([
-            'InvestmentID' => 'INV123',
-            'InvestmentName' => 'Investasi 1',
-            'InvestmentType' => 'Jenis Investasi 1',
+            'InvestmentID' => 'INV132',
+            'InvestmentName' => 'Mandiri Investa Pasar Uang',
+            'InvestmentType' => 'Pasar Uang',
             'InvestmentDescription' => 'Deskripsi Investasi 1',
             'Stock' => 100,
             'InvestmentPrice' => 1000.00,
@@ -61,8 +61,19 @@ class DatabaseSeeder extends Seeder
 
         Investments::create([
             'InvestmentID' => 'INV456',
-            'InvestmentName' => 'Investasi 2',
-            'InvestmentType' => 'Jenis Investasi 2',
+            'InvestmentName' => 'BCA Reksa Dana Pasar Uang',
+            'InvestmentType' => 'Pasar Uang',
+            'InvestmentDescription' => 'Deskripsi Investasi 2',
+            'Stock' => 100,
+            'InvestmentPrice' => 1500.00,
+            'MinimumOrder' => 5,
+            'MaximumOrder' => 30,
+        ]);
+
+        Investments::create([
+            'InvestmentID' => 'INV477',
+            'InvestmentName' => 'BCA Reksa Dana Pasar Uang',
+            'InvestmentType' => 'Pasar Uang',
             'InvestmentDescription' => 'Deskripsi Investasi 2',
             'Stock' => 100,
             'InvestmentPrice' => 1500.00,

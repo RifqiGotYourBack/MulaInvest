@@ -18,7 +18,7 @@ class AssetController extends Controller
     {
         $investment = Investments::findOrFail($InvestmentId);
     
-        // Validasiequest
+        // Validasi request
         $request->validate([
             'BuyAmount' => ['required', 'numeric', 'min:1', 'max:'.$investment->Stock]
         ]);
@@ -30,57 +30,63 @@ class AssetController extends Controller
         $latestPrice = $investment->InvestmentPrice;
         $buyAmount = $request->BuyAmount;
         $totalCost = $latestPrice * $buyAmount;
-    
+        
+        // Cek jumlah pembelian
+        if ($buyAmount < $investment->MinimumOrder) {
+            return redirect()->back()->with('error', 'Pembelian Aset Tidak Memenuhi Minimum Pembelian.');
+        }
+
         // Cek saldo
         if ($userTable->Balance < $totalCost) {
             dd($userTable->Balance);
-            return redirect()->back()->with('error', 'Insufficient balance to purchase this amount of assets.');
+            return redirect()->back()->with('error', 'Saldo Anda Tidak Mencukupi');
         }
     
         // Cek stock 
         if ($investment->Stock < $buyAmount) {
-            return redirect()->back()->with('error', 'Insufficient stock for this investment.');
+            return redirect()->back()->with('error', 'Stok Aset Tidak Memenuhi Permintaan');
         }
     
         // Transaction (catat asset dan update saldo user)
         DB::beginTransaction();
         try {
-        $existingAsset = Assets::where('UserID', $userID)
-                                ->where('InvestmentID', $InvestmentId)
-                                ->where('IsActive', true) 
-                                ->first();
+            $existingAsset = Assets::where('UserID', $userID)
+                                    ->where('InvestmentID', $InvestmentId)
+                                    ->where('BuyPrice', $latestPrice)
+                                    ->where('IsActive', true) 
+                                    ->first();
 
-        if ($existingAsset) {
-            // update jika user sudah punya aset terkait
-            $existingAsset->increment('AssetAmount', $buyAmount);
-        } else {
-            $AssetID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
-            // Buat baru jika blm ada aset terkait
-            Assets::create([
-                'AssetID' => $AssetID,
-                'UserID' => $userID,
-                'InvestmentID' => $InvestmentId,
-                'AssetAmount' => $buyAmount,
-                'BuyPrice' => $latestPrice,
-                'AcquisitionDate' => now(),
-                'IsActive' => true
-            ]);
-        }
-    
-            $investment->decrement('Stock', $buyAmount);
-    
-            $userTable->decrement('Balance', $totalCost);
+            if ($existingAsset) {
+                // update jika user sudah punya aset terkait
+                $existingAsset->increment('AssetAmount', $buyAmount);
+            } else {
+                $AssetID = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+                // Buat baru jika blm ada aset terkait
+                Assets::create([
+                    'AssetID' => $AssetID,
+                    'UserID' => $userID,
+                    'InvestmentID' => $InvestmentId,
+                    'AssetAmount' => $buyAmount,
+                    'BuyPrice' => $latestPrice,
+                    'AcquisitionDate' => now(),
+                    'IsActive' => true
+                ]);
+            }
+        
+                $investment->decrement('Stock', $buyAmount);
+        
+                $userTable->decrement('Balance', $totalCost);
 
-            TransactionHistories::create([
-                'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
-                'UserID' => $userID, 
-                'TransactionAmount' => $buyAmount, 
-                'TransactionValue' => $totalCost, 
-                'TransactionType'=> 'Beli',
-                'TransactionDate' => now()
-            ]);
-            
-            DB::commit();
+                TransactionHistories::create([
+                    'TransactionID' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
+                    'UserID' => $userID, 
+                    'TransactionAmount' => $buyAmount, 
+                    'TransactionValue' => $totalCost, 
+                    'TransactionType'=> 'Beli',
+                    'TransactionDate' => now()
+                ]);
+                
+                DB::commit();
     
             return redirect()->back()->with('success', 'Pembelian Aset Berhasil.');
         } catch (\Exception $e) {
